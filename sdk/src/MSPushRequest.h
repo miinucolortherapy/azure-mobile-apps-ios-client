@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MSBlockDefinitions.h"
+#import "MSInstallation.h"
 
 @class MSPush;
 
@@ -15,6 +16,12 @@
                                            push:(MSPush *)push
                                       templates:(NSDictionary *)templates
                                      completion:(MSCompletionBlock)completion;
+
+/// Creates a request to update the installation Id associated with this device
+/// with the given installation
++(MSPushRequest *) requestToRegisterInstallation:(MSInstallation *)installation
+                                            push:(MSPush *)push
+                                      completion:(MSCompletionBlock)completion;
 
 /// Creates a request to remove the push registration associated with the device's
 /// installation ID

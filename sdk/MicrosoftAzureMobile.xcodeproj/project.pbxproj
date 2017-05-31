@@ -100,6 +100,8 @@
 		5A4FACC81B05E6950027011D /* MSPredicateTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F33B2C1616684F002DD7C6 /* MSPredicateTranslator.m */; };
 		7929542819B7C793006A3829 /* MSQueryResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 7929542619B7C793006A3829 /* MSQueryResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7929542919B7C793006A3829 /* MSQueryResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 7929542719B7C793006A3829 /* MSQueryResult.m */; };
+		8007A92D1EDD9D5600D53851 /* MSInstallation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8007A92C1EDD9D5600D53851 /* MSInstallation.m */; };
+		8007A9301EDDC3F500D53851 /* MSInstallationTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8007A92F1EDDC3F500D53851 /* MSInstallationTemplate.m */; };
 		870C0C9C199C246700A134DD /* MSSDKFeatures.h in Headers */ = {isa = PBXBuildFile; fileRef = 870C0C9A199C246700A134DD /* MSSDKFeatures.h */; };
 		870C0C9D199C246700A134DD /* MSSDKFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 870C0C9B199C246700A134DD /* MSSDKFeatures.m */; };
 		9C25F4B11DC7D773001E6298 /* MSLoginSafariViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C25F4B01DC7D773001E6298 /* MSLoginSafariViewController.h */; };
@@ -435,6 +437,10 @@
 		5A4FAC761B05DFAD0027011D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7929542619B7C793006A3829 /* MSQueryResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSQueryResult.h; sourceTree = "<group>"; };
 		7929542719B7C793006A3829 /* MSQueryResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSQueryResult.m; sourceTree = "<group>"; };
+		8007A92B1EDD9D4200D53851 /* MSInstallation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSInstallation.h; sourceTree = "<group>"; };
+		8007A92C1EDD9D5600D53851 /* MSInstallation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSInstallation.m; sourceTree = "<group>"; };
+		8007A92E1EDDC3E100D53851 /* MSInstallationTemplate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSInstallationTemplate.h; sourceTree = "<group>"; };
+		8007A92F1EDDC3F500D53851 /* MSInstallationTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSInstallationTemplate.m; sourceTree = "<group>"; };
 		870C0C9A199C246700A134DD /* MSSDKFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSDKFeatures.h; sourceTree = "<group>"; };
 		870C0C9B199C246700A134DD /* MSSDKFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSDKFeatures.m; sourceTree = "<group>"; };
 		8790D2BE199C5D510000DC4E /* MSTableInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSTableInternal.h; sourceTree = "<group>"; };
@@ -682,6 +688,10 @@
 				A24701B4196896F500385DA2 /* MSPushRequest.m */,
 				A202C3441AA25F730005A8AE /* MSPushConnection.h */,
 				A202C3451AA25F730005A8AE /* MSPushConnection.m */,
+				8007A92B1EDD9D4200D53851 /* MSInstallation.h */,
+				8007A92C1EDD9D5600D53851 /* MSInstallation.m */,
+				8007A92E1EDDC3E100D53851 /* MSInstallationTemplate.h */,
+				8007A92F1EDDC3F500D53851 /* MSInstallationTemplate.m */,
 			);
 			name = Push;
 			sourceTree = "<group>";
@@ -1462,12 +1472,14 @@
 				E8F33B16161667CE002DD7C6 /* MSError.m in Sources */,
 				7929542919B7C793006A3829 /* MSQueryResult.m in Sources */,
 				E8F33B17161667CE002DD7C6 /* MSQuery.m in Sources */,
+				8007A9301EDDC3F500D53851 /* MSInstallationTemplate.m in Sources */,
 				E8F33B18161667CE002DD7C6 /* MSTable.m in Sources */,
 				A25888F918A19CBA00962F9A /* MSSyncContext.m in Sources */,
 				CF4D498A1A2E5CF8006AEB70 /* MSQueuePullOperation.m in Sources */,
 				E8F33B19161667CE002DD7C6 /* MSUser.m in Sources */,
 				E8F33B2416166822002DD7C6 /* MSClientConnection.m in Sources */,
 				A202C3471AA25F730005A8AE /* MSPushConnection.m in Sources */,
+				8007A92D1EDD9D5600D53851 /* MSInstallation.m in Sources */,
 				870C0C9D199C246700A134DD /* MSSDKFeatures.m in Sources */,
 				F3A67D521D59588300F07A49 /* MSConnectionDelegate.m in Sources */,
 				A3D7153A1C1A09EC00545C0B /* MSManagedObjectObserver.m in Sources */,
