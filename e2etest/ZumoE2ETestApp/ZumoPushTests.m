@@ -129,10 +129,10 @@ static NSString *pushClientKey = @"PushClientKey";
     }
     
     [result addObject:[self createRegisterUnregisterTest]];
+    [result addObject:[self createTemplateRegisterUnregisterTest]];
+    [result addObject:[self createOverrideRegistrationTest]];
+    [result addObject:[self createRegisterLoginTest]];
     [result addObject:[self createRegisterInstallationTest]];
-  //[result addObject:[self createTemplateRegisterUnregisterTest]];
-  //[result addObject:[self createOverrideRegistrationTest]];
-  //[result addObject:[self createRegisterLoginTest]];
     
     if (!isSimulator) {
 	   [result addObject:[self createPushTestWithName:@"Push simple alert" forPayload:@{ @"aps": @{ @"alert": @"push received" } }  withDelay:0]];
