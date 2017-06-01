@@ -129,9 +129,10 @@ static NSString *pushClientKey = @"PushClientKey";
     }
     
     [result addObject:[self createRegisterUnregisterTest]];
-    [result addObject:[self createTemplateRegisterUnregisterTest]];
-    [result addObject:[self createOverrideRegistrationTest]];
-    [result addObject:[self createRegisterLoginTest]];
+    [result addObject:[self createRegisterInstallationTest]];
+  //[result addObject:[self createTemplateRegisterUnregisterTest]];
+  //[result addObject:[self createOverrideRegistrationTest]];
+  //[result addObject:[self createRegisterLoginTest]];
     
     if (!isSimulator) {
 	   [result addObject:[self createPushTestWithName:@"Push simple alert" forPayload:@{ @"aps": @{ @"alert": @"push received" } }  withDelay:0]];
@@ -266,12 +267,78 @@ static NSString *pushClientKey = @"PushClientKey";
     return[ZumoTest createTestWithName:@"RegisterUnregister" andExecution:testExecution];
 }
 
++ (ZumoTest *)createRegisterInstallationTest
+{
+  ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
+    MSClient *client = [[ZumoTestGlobals sharedInstance] client];
+    NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
+
+    MSAPIBlock checkVerifyUnregister = ^(id result, NSHTTPURLResponse *response, NSError *error) {
+      if (error) {
+        [test addLog:[NSString stringWithFormat:@"Verification error: %@", error.localizedDescription]];
+        completion(NO);
+        return;
+      }
+      completion(test.testStatus != TSFailed);
+    };
+
+    MSCompletionBlock verifyUnregister = ^(NSError *error) {
+      // Verify unregister succeeded
+      if (error) {
+        [test addLog:[NSString stringWithFormat:@"Error unregistering: %@", error.description]];
+        test.testStatus = TSFailed;
+
+        completion(NO);
+        return;
+      }
+
+      [client invokeAPI:@"verifyUnregisterInstallationResult"
+                   body:nil
+             HTTPMethod:@"GET"
+             parameters:nil
+                headers:nil
+             completion:checkVerifyUnregister];
+    };
+
+    MSAPIBlock verifyRegister = ^(id result, NSHTTPURLResponse *response, NSError *error) {
+      if (error) {
+        [test addLog:[NSString stringWithFormat:@"Verification error: %@", error.localizedDescription]];
+        test.testStatus = TSFailed;
+      }
+
+      [client.push unregisterWithCompletion:verifyUnregister];
+    };
+
+    NSString *pushChannel = [ZumoPushTests convertDeviceToken:deviceToken];
+    MSInstallation *installation = [MSInstallation installationWithInstallationId:@"AC767AE7-94EA-4022-958C-B310DED5ADC8" platform:@"apns" pushChannel:pushChannel pushVariables:nil tags:nil templates:nil];
+    [client.push registerInstallation:installation
+                          completion:^(NSError *error) {
+                            // Verify register call succeeded
+                            if (error) {
+                              [test addLog:[NSString stringWithFormat:@"Encountered error registering with Mobile Service: %@", error.description]];
+                              [test setTestStatus:TSFailed];
+                              completion(NO);
+                              return;
+                            }
+
+                            [client invokeAPI:@"verifyRegisterInstallationResult"
+                                         body:nil
+                                   HTTPMethod:@"GET"
+                                   parameters:@{ @"channelUri" : [ZumoPushTests convertDeviceToken:deviceToken]}
+                                      headers:nil
+                                   completion:verifyRegister];
+                          }];
+  };
+
+  return[ZumoTest createTestWithName:@"RegisterInstallation" andExecution:testExecution];
+}
+
 + (ZumoTest *)createRegisterLoginTest
 {
     ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
         MSClient *client = [[ZumoTestGlobals sharedInstance] client];
         NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
-        
+
         MSCompletionBlock unregisterInstallation = ^(NSError *error) {
             // Verify unregister succeeded
             if (error) {
