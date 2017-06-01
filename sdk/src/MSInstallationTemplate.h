@@ -18,19 +18,19 @@
 @property (nonatomic, strong) NSString *expiry;
 
 /// A list of tags for a particular template.
-@property (nonatomic, strong) NSMutableArray *tags;
+@property (nonatomic, strong) NSArray *tags;
 
 /// @}
 
-#pragma  mark * Public Initializer Methods
+#pragma  mark * Public Static Initializer Methods
 
 /// @name Initializing the MSInstallationTemplate object
 /// @{
 
 ///Initializes an |MSInstallationTemplate| with the given properties.
--(id) initWithBody:(NSString *)body
-            expiry:(NSString *)expiry
-              tags:(NSArray *)tags;
++(id) installationTemplateWithBody:(NSString *)body
+                            expiry:(NSString *)expiry
+                              tags:(NSArray *)tags;
 
 /// @}
 @end

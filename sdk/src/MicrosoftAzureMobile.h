@@ -27,6 +27,8 @@
 #import "MSTableOperation.h"
 #import "MSTableOperationError.h"
 #import "MSUser.h"
+#import "MSInstallation.h"
+#import "MSInstallationTemplate.h"
 
 #define MicrosoftAzureMobileSdkMajorVersion 3
 #define MicrosoftAzureMobileSdkMinorVersion 3

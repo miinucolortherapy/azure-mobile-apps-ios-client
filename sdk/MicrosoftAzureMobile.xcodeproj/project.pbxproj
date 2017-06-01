@@ -102,6 +102,16 @@
 		7929542919B7C793006A3829 /* MSQueryResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 7929542719B7C793006A3829 /* MSQueryResult.m */; };
 		8007A92D1EDD9D5600D53851 /* MSInstallation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8007A92C1EDD9D5600D53851 /* MSInstallation.m */; };
 		8007A9301EDDC3F500D53851 /* MSInstallationTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8007A92F1EDDC3F500D53851 /* MSInstallationTemplate.m */; };
+		80A4109D1EDF317F00C1B729 /* MSInstallation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8007A92B1EDD9D4200D53851 /* MSInstallation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		80A4109E1EDF317F00C1B729 /* MSInstallation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8007A92B1EDD9D4200D53851 /* MSInstallation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		80A4109F1EDF318000C1B729 /* MSInstallation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8007A92B1EDD9D4200D53851 /* MSInstallation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		80A410A01EDF318300C1B729 /* MSInstallationTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8007A92E1EDDC3E100D53851 /* MSInstallationTemplate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		80A410A11EDF318300C1B729 /* MSInstallationTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8007A92E1EDDC3E100D53851 /* MSInstallationTemplate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		80A410A21EDF318400C1B729 /* MSInstallationTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8007A92E1EDDC3E100D53851 /* MSInstallationTemplate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		80F59CF41EDF0CEE001E9036 /* MSInstallation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8007A92C1EDD9D5600D53851 /* MSInstallation.m */; };
+		80F59CF51EDF0CF0001E9036 /* MSInstallation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8007A92C1EDD9D5600D53851 /* MSInstallation.m */; };
+		80F59CF61EDF0CF3001E9036 /* MSInstallationTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8007A92F1EDDC3F500D53851 /* MSInstallationTemplate.m */; };
+		80F59CF71EDF0CF4001E9036 /* MSInstallationTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8007A92F1EDDC3F500D53851 /* MSInstallationTemplate.m */; };
 		870C0C9C199C246700A134DD /* MSSDKFeatures.h in Headers */ = {isa = PBXBuildFile; fileRef = 870C0C9A199C246700A134DD /* MSSDKFeatures.h */; };
 		870C0C9D199C246700A134DD /* MSSDKFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 870C0C9B199C246700A134DD /* MSSDKFeatures.m */; };
 		9C25F4B11DC7D773001E6298 /* MSLoginSafariViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C25F4B01DC7D773001E6298 /* MSLoginSafariViewController.h */; };
@@ -1033,6 +1043,7 @@
 				5A4FAC8D1B05E5180027011D /* MSTable.h in Headers */,
 				A3D7153D1C1A09FE00545C0B /* MSManagedObjectObserver.h in Headers */,
 				5A4FAC891B05E4FE0027011D /* MSError.h in Headers */,
+				80A4109E1EDF317F00C1B729 /* MSInstallation.h in Headers */,
 				5A4FACA61B05E6000027011D /* MSQueuePullOperation.h in Headers */,
 				5A4FAC851B05E4E90027011D /* MSClient.h in Headers */,
 				5A4FACC71B05E6920027011D /* MSPredicateTranslator.h in Headers */,
@@ -1042,6 +1053,7 @@
 				5A4FACBE1B05E6730027011D /* MSURLBuilder.h in Headers */,
 				F3EBDFF61BAC306200D82B10 /* MSPullSettings.h in Headers */,
 				5A4FACA41B05E5F20027011D /* MSOperationQueue.h in Headers */,
+				80A410A11EDF318300C1B729 /* MSInstallationTemplate.h in Headers */,
 				5A4FAC981B05E5500027011D /* MSPushRequest.h in Headers */,
 				5A4FACC51B05E68C0027011D /* MSJSONSerializer.h in Headers */,
 				5A4FAC791B05E47F0027011D /* MSLoginSerializer.h in Headers */,
@@ -1095,6 +1107,7 @@
 				F3366E891D50636900FBAEF9 /* NSURLSessionTask+Completion.h in Headers */,
 				E8E3790E161F769D00C13F00 /* MSClient.h in Headers */,
 				A3D7153C1C1A09F300545C0B /* MSManagedObjectObserver.h in Headers */,
+				80A4109D1EDF317F00C1B729 /* MSInstallation.h in Headers */,
 				E8E37911161F769D00C13F00 /* MSTable.h in Headers */,
 				A24701BD196896F500385DA2 /* MSPushRequest.h in Headers */,
 				A3FD2DB01BB1C3F300624DA0 /* MSQueryInternal.h in Headers */,
@@ -1104,6 +1117,7 @@
 				A258891618A19D0B00962F9A /* MSSyncTable.h in Headers */,
 				E8E37912161F769D00C13F00 /* MSUser.h in Headers */,
 				A258891418A19D0B00962F9A /* MSSyncContext.h in Headers */,
+				80A410A01EDF318300C1B729 /* MSInstallationTemplate.h in Headers */,
 				D0D3B9371B2A267F002A126A /* MSPullSettings.h in Headers */,
 				A281900418BB2FF5001B14E7 /* MSTableOperationError.h in Headers */,
 				E8E37913161F769D00C13F00 /* MSFilter.h in Headers */,
@@ -1149,6 +1163,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80A4109F1EDF318000C1B729 /* MSInstallation.h in Headers */,
 				F3C002771AF7FFF60028AB81 /* MSQueryResult.h in Headers */,
 				F3C002781AF7FFF60028AB81 /* MicrosoftAzureMobile.h in Headers */,
 				F3C0027C1AF7FFF60028AB81 /* MSError.h in Headers */,
@@ -1160,6 +1175,7 @@
 				F3C002791AF7FFF60028AB81 /* MSClient.h in Headers */,
 				F36D9F021C3A46CD002AC412 /* MSConnectionConfiguration.h in Headers */,
 				F3C0027B1AF7FFF60028AB81 /* MSDateOffset.h in Headers */,
+				80A410A21EDF318400C1B729 /* MSInstallationTemplate.h in Headers */,
 				F3C002821AF7FFF60028AB81 /* MSFilter.h in Headers */,
 				F3C002861AF7FFF70028AB81 /* MSCoreDataStore.h in Headers */,
 				F3C002871AF7FFF70028AB81 /* MSSyncContextReadResult.h in Headers */,
@@ -1422,12 +1438,14 @@
 				5A4FACC61B05E68F0027011D /* MSJSONSerializer.m in Sources */,
 				5A4FACC31B05E6840027011D /* MSNaiveISODateFormatter.m in Sources */,
 				5A4FAC831B05E4DB0027011D /* MSQueryResult.m in Sources */,
+				80F59CF61EDF0CF3001E9036 /* MSInstallationTemplate.m in Sources */,
 				5A4FACBF1B05E6770027011D /* MSURLBuilder.m in Sources */,
 				5A4FAC781B05E4790027011D /* MSLoginSerializer.m in Sources */,
 				5A4FACC81B05E6950027011D /* MSPredicateTranslator.m in Sources */,
 				5A4FACA31B05E5860027011D /* MSSyncContext.m in Sources */,
 				5A4FAC7C1B05E4910027011D /* MSLoginView.m in Sources */,
 				5A4FAC901B05E52C0027011D /* MSUser.m in Sources */,
+				80F59CF41EDF0CEE001E9036 /* MSInstallation.m in Sources */,
 				5A4FACBD1B05E6700027011D /* MSSDKFeatures.m in Sources */,
 				A3D7153F1C1A0A0600545C0B /* MSManagedObjectObserver.m in Sources */,
 				5A4FACC11B05E67E0027011D /* MSUserAgentBuilder.m in Sources */,
@@ -1573,11 +1591,13 @@
 				F3C0025F1AF7FFD10028AB81 /* MSSyncTable.m in Sources */,
 				F3C002601AF7FFD10028AB81 /* MSSyncContext.m in Sources */,
 				F3C002611AF7FFD10028AB81 /* MSOperationQueue.m in Sources */,
+				80F59CF71EDF0CF4001E9036 /* MSInstallationTemplate.m in Sources */,
 				F3C002621AF7FFD10028AB81 /* MSQueuePullOperation.m in Sources */,
 				F3C002631AF7FFD10028AB81 /* MSQueuePurgeOperation.m in Sources */,
 				F3C002641AF7FFD10028AB81 /* MSQueuePushOperation.m in Sources */,
 				F3C002651AF7FFD20028AB81 /* MSTableConfigValue.m in Sources */,
 				F3C002661AF7FFD20028AB81 /* MSTableOperation.m in Sources */,
+				80F59CF51EDF0CF0001E9036 /* MSInstallation.m in Sources */,
 				A3D715401C1A0A0700545C0B /* MSManagedObjectObserver.m in Sources */,
 				F3C002671AF7FFD20028AB81 /* MSTableOperationError.m in Sources */,
 				F3C0026A1AF7FFD20028AB81 /* MSLogin.m in Sources */,

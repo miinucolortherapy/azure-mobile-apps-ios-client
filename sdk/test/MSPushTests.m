@@ -175,7 +175,7 @@
   NSURL *expectedURL = [self.url URLByAppendingPathComponent:@"push/installations"];
   expectedURL = [expectedURL URLByAppendingPathComponent:self.client.installId];
 
-  MSInstallation *installation = [[MSInstallation alloc] initWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:nil tags:nil templates:nil];
+  MSInstallation *installation = [MSInstallation installationWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:nil tags:nil templates:nil];
 
   filter.onInspectRequest = ^(NSURLRequest *request) {
     XCTAssertEqualObjects(request.HTTPMethod, @"PUT");
@@ -211,7 +211,7 @@
 
   NSDictionary *pushVariables = @{@"key1":@"value1",@"key2":@"value2"};
 
-  MSInstallation *installation = [[MSInstallation alloc] initWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:pushVariables tags:nil templates:nil];
+  MSInstallation *installation = [MSInstallation installationWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:pushVariables tags:nil templates:nil];
 
   filter.onInspectRequest = ^(NSURLRequest *request) {
     XCTAssertEqualObjects(request.HTTPMethod, @"PUT");
@@ -244,7 +244,7 @@
   expectedURL = [expectedURL URLByAppendingPathComponent:self.client.installId];
 
   NSArray *tags = @[@"topics:my-first-tag", @"topics:my-second-tag"];
-  MSInstallation *installation = [[MSInstallation alloc] initWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:nil tags:tags templates:nil];
+  MSInstallation *installation = [MSInstallation installationWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:nil tags:tags templates:nil];
 
   filter.onInspectRequest = ^(NSURLRequest *request) {
     XCTAssertEqualObjects(request.HTTPMethod, @"PUT");
@@ -277,10 +277,10 @@
   expectedURL = [expectedURL URLByAppendingPathComponent:self.client.installId];
 
   NSArray *tags = @[@"topics:my-first-tag", @"topics:my-second-tag"];
-  MSInstallationTemplate *template = [[MSInstallationTemplate alloc] initWithBody:@"body" expiry:@"expiry" tags:tags];
+  MSInstallationTemplate *template = [MSInstallationTemplate installationTemplateWithBody:@"body" expiry:@"expiry" tags:tags];
   NSDictionary *templates = @{@"templateName":template};
 
-  MSInstallation *installation = [[MSInstallation alloc] initWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:nil tags:nil templates:templates];
+  MSInstallation *installation = [MSInstallation installationWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:nil tags:nil templates:templates];
 
   filter.onInspectRequest = ^(NSURLRequest *request) {
     XCTAssertEqualObjects(request.HTTPMethod, @"PUT");

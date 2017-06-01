@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MSInstallation : NSObject
+@interface MSInstallation : NSObject 
 
 #pragma mark * Public Properties
 
@@ -37,28 +37,28 @@
 
 /// @}
 
-#pragma  mark * Public Initializer Methods
+#pragma  mark * Public Static Initializer Methods
 
 /// @name Initializing the MSInstallation object
 /// @{
 
 /// Initializes an |MSInstallation| with the given properties.
--(nonnull id) initWithInstallationId:(nonnull NSString *)installationId
-                            platform:(nonnull NSString *)platform
-                         pushChannel:(nonnull NSString *)pushChannel
-                       pushVariables:(nullable NSDictionary *)pushVariables
-                                tags:(nullable NSArray *) tags
-                           templates:(nullable NSDictionary *) templates
-                      expirationTime:(nullable NSDate *) expirationTime
-                  pushChannelExpired:(BOOL) pushChannelExpired;
++(nonnull id) installationWithInstallationId:(nonnull NSString *)installationId
+                                    platform:(nonnull NSString *)platform
+                                 pushChannel:(nonnull NSString *)pushChannel
+                               pushVariables:(nullable NSDictionary *)pushVariables
+                                        tags:(nullable NSArray *) tags
+                                   templates:(nullable NSDictionary *) templates
+                              expirationTime:(nullable NSDate *) expirationTime
+                          pushChannelExpired:(BOOL) pushChannelExpired;
 
 ///Initializes an |MSInstallation| with the given properties.
--(nonnull id) initWithInstallationId:(nonnull NSString *)installationId
-                            platform:(nonnull NSString *)platform
-                         pushChannel:(nonnull NSString *)pushChannel
-                       pushVariables:(nullable NSDictionary *)pushVariables
-                                tags:(nullable NSArray *) tags
-                           templates:(nullable NSDictionary *) templates;
++(nonnull id) installationWithInstallationId:(nonnull NSString *)installationId
+                                    platform:(nonnull NSString *)platform
+                                 pushChannel:(nonnull NSString *)pushChannel
+                               pushVariables:(nullable NSDictionary *)pushVariables
+                                        tags:(nullable NSArray *) tags
+                                   templates:(nullable NSDictionary *) templates;
 
 /// @}
 
