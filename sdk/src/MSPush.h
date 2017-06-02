@@ -38,7 +38,7 @@
 /// Register for notifications with given deviceToken and a template.
 -(void)registerDeviceToken:(nonnull NSData *)deviceToken template:(nullable NSDictionary *)template completion:(nullable MSCompletionBlock)completion;
 
-/// Register for notifications with given a installation.
+/// Register for notifications with given installation.
 -(void)registerInstallation:(nonnull MSInstallation *)installation completion:(nullable MSCompletionBlock)completion;
 
 /// Unregister device from all notifications.

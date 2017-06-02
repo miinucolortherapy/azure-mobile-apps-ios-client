@@ -62,7 +62,7 @@
 
 - (void) registerInstallation:(MSInstallation *)installation completion:(MSCompletionBlock)completion
 {
-    // Verify the device token is present
+    // Verify the installation is present
     if (!installation) {
         if (completion) {
             completion([self errorForMissingParameterWithParameterName:@"installation"]);
