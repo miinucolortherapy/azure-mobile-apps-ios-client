@@ -10,20 +10,20 @@
                             expiry:(NSString *)expiry
                               tags:(NSArray *)tags
 {
-  return [[MSInstallationTemplate alloc] initWithBody:body expiry:expiry tags:tags];
+    return [[MSInstallationTemplate alloc] initWithBody:body expiry:expiry tags:tags];
 }
 
 -(id) initWithBody:(NSString *)body
             expiry:(NSString *)expiry
               tags:(NSArray *)tags
 {
-  self = [super init];
-  if (self) {
-    _body = body;
-    _expiry = expiry;
-    _tags = tags;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        _body = body;
+        _expiry = expiry;
+        _tags = tags;
+    }
+    return self;
 }
 
 @end

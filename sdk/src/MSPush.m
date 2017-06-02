@@ -62,25 +62,25 @@
 
 - (void) registerInstallation:(MSInstallation *)installation completion:(MSCompletionBlock)completion
 {
-  // Verify the device token is present
-  if (!installation) {
-    if (completion) {
-      completion([self errorForMissingParameterWithParameterName:@"installation"]);
+    // Verify the device token is present
+    if (!installation) {
+        if (completion) {
+            completion([self errorForMissingParameterWithParameterName:@"installation"]);
+        }
+        return;
     }
-    return;
-  }
 
-  // Create the request
-  MSPushRequest *request = [MSPushRequest requestToRegisterInstallation:installation
-                                                                   push:self
-                                                             completion:completion];
-  // Send the request
-  if (request) {
-    MSPushConnection *connection = [MSPushConnection connectionWithRegistrationRequest:request
-                                                                                client:self.client
-                                                                            completion:completion];
-    [connection start];
-  }
+    // Create the request
+    MSPushRequest *request = [MSPushRequest requestToRegisterInstallation:installation
+                                                                     push:self
+                                                               completion:completion];
+    // Send the request
+    if (request) {
+        MSPushConnection *connection = [MSPushConnection connectionWithRegistrationRequest:request
+                                                                                    client:self.client
+                                                                                completion:completion];
+        [connection start];
+    }
 }
 
 - (void) unregisterWithCompletion:(MSCompletionBlock)completion
