@@ -132,7 +132,7 @@ static NSString *pushClientKey = @"PushClientKey";
     [result addObject:[self createTemplateRegisterUnregisterTest]];
     [result addObject:[self createOverrideRegistrationTest]];
     [result addObject:[self createRegisterLoginTest]];
-    [result addObject:[self createRegisterInstallationTest]];
+    [result addObject:[self createRegisterUnregisterWithInstallationTest]];
     
     if (!isSimulator) {
 	   [result addObject:[self createPushTestWithName:@"Push simple alert" forPayload:@{ @"aps": @{ @"alert": @"push received" } }  withDelay:0]];
@@ -267,7 +267,7 @@ static NSString *pushClientKey = @"PushClientKey";
     return[ZumoTest createTestWithName:@"RegisterUnregister" andExecution:testExecution];
 }
 
-+ (ZumoTest *)createRegisterInstallationTest
++ (ZumoTest *)createRegisterUnregisterWithInstallationTest
 {
     ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
         MSClient *client = [[ZumoTestGlobals sharedInstance] client];
@@ -309,8 +309,9 @@ static NSString *pushClientKey = @"PushClientKey";
             [client.push unregisterWithCompletion:verifyUnregister];
         };
 
+        NSString *installId = [[NSUserDefaults standardUserDefaults] stringForKey:@"WindowsAzureMobileServicesInstallationId"];
         NSString *pushChannel = [ZumoPushTests convertDeviceToken:deviceToken];
-        MSInstallation *installation = [MSInstallation installationWithInstallationId:@"AC767AE7-94EA-4022-958C-B310DED5ADC8" platform:@"apns" pushChannel:pushChannel pushVariables:nil tags:nil templates:nil];
+        MSInstallation *installation = [MSInstallation installationWithInstallationId:installId platform:@"apns" pushChannel:pushChannel pushVariables:nil tags:nil templates:nil];
         [client.push registerInstallation:installation
                                completion:^(NSError *error) {
                                    // Verify register call succeeded
@@ -330,7 +331,7 @@ static NSString *pushClientKey = @"PushClientKey";
                                }];
     };
     
-    return[ZumoTest createTestWithName:@"RegisterInstallation" andExecution:testExecution];
+    return[ZumoTest createTestWithName:@"RegisterUnregisterWithInstallation" andExecution:testExecution];
 }
 
 + (ZumoTest *)createRegisterLoginTest
