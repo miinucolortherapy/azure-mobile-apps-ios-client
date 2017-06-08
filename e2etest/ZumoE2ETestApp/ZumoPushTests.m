@@ -117,6 +117,9 @@
 static NSString *tableName = @"iosPushTest";
 static NSString *pushClientKey = @"PushClientKey";
 
+static NSString *topicSports = @"topic:Sports";
+static NSString *topicNews = @"topic:News";
+
 + (NSArray *)createTests {
     NSMutableArray *result = [NSMutableArray new];
     BOOL isSimulator = [self isRunningOnSimulator];
@@ -627,7 +630,7 @@ static NSString *pushClientKey = @"PushClientKey";
                                                                              platform:@"apns"
                                                                           pushChannel:pushChannel
                                                                         pushVariables:nil
-                                                                                 tags:@[ @"test_tag" ]
+                                                                                 tags:@[ topicSports ]
                                                                             templates:nil];
         [client.push registerInstallation:installation
                                completion:^(NSError *error) {
@@ -643,7 +646,7 @@ static NSString *pushClientKey = @"PushClientKey";
                                                       seconds:0
                                                   deviceToken:client.push.installationId
                                                       payload:@{ @"aps": @{ @"alert": @"push tags received" } }
-                                                         tags:@[ @"test_tag" ]
+                                                         tags:@[ topicSports ]
                                                    completion:completion
                                                    isNegative:NO];
 
@@ -652,7 +655,7 @@ static NSString *pushClientKey = @"PushClientKey";
                                                       seconds:0
                                                   deviceToken:client.push.installationId
                                                       payload:@{ @"aps": @{ @"alert": @"push tags received" } }
-                                                         tags:@[ @"not_registered_tag" ]
+                                                         tags:@[ topicNews ]
                                                    completion:completion
                                                    isNegative:YES];
                                    }
@@ -710,7 +713,7 @@ static NSString *pushClientKey = @"PushClientKey";
                                                                              platform:@"apns"
                                                                           pushChannel:pushChannel
                                                                         pushVariables:nil
-                                                                                 tags:@[ @"test_tag" ]
+                                                                                 tags:@[ topicSports ]
                                                                             templates:@{ @"template":template }];
         [client.push registerInstallation:installation
                                completion:^(NSError *error) {
@@ -726,7 +729,7 @@ static NSString *pushClientKey = @"PushClientKey";
                                                       seconds:0
                                                   deviceToken:client.push.installationId
                                                       payload:@{ @"aps": @{ @"alert": @"push template no tags received" }, @"fullName":@"John Doe" }
-                                                         tags:@[ @"test_tag" ]
+                                                         tags:@[ topicSports ]
                                                    completion:completion
                                                    isNegative:NO];
                                    }
