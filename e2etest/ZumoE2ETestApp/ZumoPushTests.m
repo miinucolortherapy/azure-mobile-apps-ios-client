@@ -201,7 +201,7 @@ static NSString *topicNews = @"topic:News";
               headers:nil
            completion:^(id result, NSHTTPURLResponse *response, NSError *error)
     {
-        if (error) {
+        if (response.statusCode != 200 && error) {
             [test addLog:[NSString stringWithFormat:@"Error requesting push: %@", error]];
             [test setTestStatus:TSFailed];
             completion(NO);
@@ -555,7 +555,7 @@ static NSString *topicNews = @"topic:News";
             completion(YES);
             return;
         }
-        
+                                         
         NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
         
         if (!deviceToken) {
