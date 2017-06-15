@@ -182,7 +182,7 @@ static NSString *topicNews = @"topic:News";
                  seconds:(int)seconds
              deviceToken:(NSString *)deviceToken
                  payload:(NSDictionary *)payload
-                    tags:(NSArray*)tags
+                    tags:(NSString*)tag
               completion:(ZumoTestCompletion)completion
               isNegative:(BOOL)isNegative
 {
@@ -190,8 +190,8 @@ static NSString *topicNews = @"topic:News";
     [test addLog:[NSString stringWithFormat:@"Sending push request to API 'push'"]];
     NSMutableDictionary *item = @{@"method" : @"send", @"type" : @"apns", @"payload" : payload, @"token": deviceToken, @"delay": @(seconds)}.mutableCopy;
 
-    if (tags) {
-        [item setObject:tags forKey:@"tag"];
+    if (tag) {
+        [item setObject:tag forKey:@"tag"];
     }
 
     [client invokeAPI:@"push"
@@ -646,7 +646,7 @@ static NSString *topicNews = @"topic:News";
                                                       seconds:0
                                                   deviceToken:client.push.installationId
                                                       payload:@{ @"aps": @{ @"alert": @"push tags received" } }
-                                                         tags:@[ topicSports ]
+                                                         tags:topicSports
                                                    completion:completion
                                                    isNegative:NO];
 
@@ -655,7 +655,7 @@ static NSString *topicNews = @"topic:News";
                                                       seconds:0
                                                   deviceToken:client.push.installationId
                                                       payload:@{ @"aps": @{ @"alert": @"push tags received" } }
-                                                         tags:@[ topicNews ]
+                                                         tags:topicNews
                                                    completion:completion
                                                    isNegative:YES];
                                    }
@@ -671,7 +671,7 @@ static NSString *topicNews = @"topic:News";
 
         NSString *installId = [[NSUserDefaults standardUserDefaults] stringForKey:@"WindowsAzureMobileServicesInstallationId"];
         NSString *pushChannel = [ZumoPushTests convertDeviceToken:deviceToken];
-        MSInstallationTemplate *template = [MSInstallationTemplate installationTemplateWithBody:@"data:{message:{user:$(fullName)}}" expiry:nil tags:nil];
+        MSInstallationTemplate *template = [MSInstallationTemplate installationTemplateWithBody:@"{\"aps\": {\"alert\": \"$(message)\"}}" expiry:nil tags:nil];
         MSInstallation *installation = [MSInstallation installationWithInstallationId:installId
                                                                              platform:@"apns"
                                                                           pushChannel:pushChannel
@@ -691,7 +691,7 @@ static NSString *topicNews = @"topic:News";
                                                          test:test
                                                       seconds:0
                                                   deviceToken:client.push.installationId
-                                                      payload:@{ @"aps": @{ @"alert": @"push template no tags received" }, @"fullName":@"John Doe" }
+                                                      payload:@{ @"aps": @{ @"message": @"From template" } }
                                                          tags:nil
                                                    completion:completion
                                                    isNegative:NO];
@@ -729,7 +729,7 @@ static NSString *topicNews = @"topic:News";
                                                       seconds:0
                                                   deviceToken:client.push.installationId
                                                       payload:@{ @"aps": @{ @"alert": @"push template no tags received" }, @"fullName":@"John Doe" }
-                                                         tags:@[ topicSports ]
+                                                         tags:topicSports
                                                    completion:completion
                                                    isNegative:NO];
                                    }
