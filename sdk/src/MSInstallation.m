@@ -10,10 +10,10 @@
                             platform:(NSString *)platform
                          pushChannel:(NSString *)pushChannel
                        pushVariables:(NSDictionary *)pushVariables
-                                tags:(NSArray *) tags
-                           templates:(NSDictionary *) templates
-                      expirationTime:(NSDate *) expirationTime
-                  pushChannelExpired:(BOOL) pushChannelExpired
+                                tags:(NSArray *)tags
+                           templates:(NSDictionary *)templates
+                      expirationTime:(NSDate *)expirationTime
+                  pushChannelExpired:(BOOL)pushChannelExpired
 {
     return [[MSInstallation alloc] initWithInstallationId:installationId platform:platform pushChannel:pushChannel pushVariables:pushVariables tags:tags templates:templates expirationTime:expirationTime pushChannelExpired:pushChannelExpired];
 }
@@ -22,8 +22,8 @@
                             platform:(NSString *)platform
                          pushChannel:(NSString *)pushChannel
                        pushVariables:(NSDictionary *)pushVariables
-                                tags:(NSArray *) tags
-                           templates:(NSDictionary *) templates
+                                tags:(NSArray *)tags
+                           templates:(NSDictionary *)templates
 {
     return [[MSInstallation alloc] initWithInstallationId:installationId platform:platform pushChannel:pushChannel pushVariables:pushVariables tags:tags templates:templates expirationTime:nil pushChannelExpired:NO];
 }
@@ -32,10 +32,10 @@
                     platform:(NSString *)platform
                  pushChannel:(NSString *)pushChannel
                pushVariables:(NSDictionary *)pushVariables
-                        tags:(NSArray *) tags
-                   templates:(NSDictionary *) templates
-              expirationTime:(NSDate *) expirationTime
-          pushChannelExpired:(BOOL) pushChannelExpired
+                        tags:(NSArray *)tags
+                   templates:(NSDictionary *)templates
+              expirationTime:(NSDate *)expirationTime
+          pushChannelExpired:(BOOL)pushChannelExpired
 {
     self = [super init];
     if (self) {
