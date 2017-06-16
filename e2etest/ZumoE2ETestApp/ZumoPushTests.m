@@ -179,16 +179,22 @@ static NSString *topicNews = @"topic:News";
 
 + (void)sendNotification:(MSClient *)client
                     test:(ZumoTest *)test
+                    type:(NSString *) type
                  seconds:(int)seconds
              deviceToken:(NSString *)deviceToken
                  payload:(NSDictionary *)payload
+         expectedPayload:(NSDictionary *)expectedPayload
                     tags:(NSString*)tag
               completion:(ZumoTestCompletion)completion
               isNegative:(BOOL)isNegative
 {
 
   [test addLog:[NSString stringWithFormat:@"Sending push request to API 'push'"]];
-  NSMutableDictionary *item = @{@"method" : @"send", @"type" : @"apns", @"payload" : payload, @"token": deviceToken, @"delay": @(seconds)}.mutableCopy;
+  if (type == nil){
+    type = @"apns";
+  }
+
+  NSMutableDictionary *item = @{@"method" : @"send", @"type" : type, @"payload" : payload, @"token": deviceToken, @"delay": @(seconds)}.mutableCopy;
 
   if (tag) {
     [item setObject:tag forKey:@"tag"];
@@ -207,8 +213,12 @@ static NSString *topicNews = @"topic:News";
        completion(NO);
      } else {
        NSTimeInterval timeToWait = 15;
-       NSDictionary *expectedPayload = isNegative ? nil : payload;
-       ZumoPushClient *pushClient = [[ZumoPushClient alloc] initForTest:test withPayload:expectedPayload waitFor:timeToWait withTestCompletion:completion];
+
+       NSDictionary *realExpectedPaylod = expectedPayload;
+       if (!realExpectedPaylod) {
+         realExpectedPaylod = isNegative ? nil : payload;
+       }
+       ZumoPushClient *pushClient = [[ZumoPushClient alloc] initForTest:test withPayload:realExpectedPaylod waitFor:timeToWait withTestCompletion:completion];
        [[test propertyBag] setValue:pushClient forKey:pushClientKey];
 
        // completion will be called on the push client...
@@ -574,9 +584,11 @@ static NSString *topicNews = @"topic:News";
 
                                            [self sendNotification:client
                                                              test:test
+                                                             type:nil
                                                           seconds:seconds
                                                       deviceToken:client.push.installationId
                                                           payload:payload
+                                                  expectedPayload:nil
                                                              tags:nil
                                                        completion:completion
                                                        isNegative:isNegative];
@@ -606,9 +618,11 @@ static NSString *topicNews = @"topic:News";
                              } else {
                                [self sendNotification:client
                                                  test:test
+                                                 type:nil
                                               seconds:0
                                           deviceToken:client.push.installationId
                                               payload:@{ @"aps": @{ @"alert": @"push no template or tags received" } }
+                                      expectedPayload:nil
                                                  tags:nil
                                            completion:completion
                                            isNegative:NO];
@@ -643,9 +657,11 @@ static NSString *topicNews = @"topic:News";
                              } else {
                                [self sendNotification:client
                                                  test:test
+                                                 type:nil
                                               seconds:0
                                           deviceToken:client.push.installationId
                                               payload:@{ @"aps": @{ @"alert": @"push tags received" } }
+                                      expectedPayload:nil
                                                  tags:topicSports
                                            completion:completion
                                            isNegative:NO];
@@ -680,9 +696,11 @@ static NSString *topicNews = @"topic:News";
                              } else {
                                [self sendNotification:client
                                                  test:test
+                                                 type:@"template"
                                               seconds:0
                                           deviceToken:client.push.installationId
-                                              payload:@{ @"aps": @{ @"message": @"From template" } }
+                                              payload:@{@"message":@"From template"}
+                                      expectedPayload:@{@"aps": @{@"alert": @"From template"}}
                                                  tags:nil
                                            completion:completion
                                            isNegative:NO];
@@ -717,9 +735,11 @@ static NSString *topicNews = @"topic:News";
                              } else {
                                [self sendNotification:client
                                                  test:test
+                                                 type:@"template"
                                               seconds:0
                                           deviceToken:client.push.installationId
-                                              payload:@{ @"aps": @{ @"message": @"From template" } }
+                                              payload:@{@"message": @"From template"}
+                                      expectedPayload:@{@"aps": @{@"alert": @"From template"}}
                                                  tags:topicSports
                                            completion:completion
                                            isNegative:NO];
