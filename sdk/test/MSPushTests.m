@@ -7,6 +7,8 @@
 #import "MSMultiRequestTestFilter.h"
 #import "MSPush.h"
 #import "MSClientInternal.h"
+#import "MSInstallation.h"
+#import "MSInstallationTemplate.h"
 
 @interface MSPushTests : XCTestCase
 @property (nonatomic) BOOL done;
@@ -155,11 +157,148 @@
     
     [testClient.push registerDeviceToken:deviceToken template:template completion:^(NSError *error) {
         XCTAssertNil(error);
-        
+
         // Verify we didn't mess with input template
         id t1Body = template[@"t1"][@"body"];
         XCTAssertTrue([t1Body isKindOfClass:[NSDictionary class]]);
         
+        self.done = YES;
+    }];
+    
+    XCTAssertTrue([self waitForTest:15], @"Test timed out.");
+}
+
+-(void) testRegisterInstallationOnlyRequiredFields
+{
+    MSTestFilter *filter = [MSTestFilter testFilterWithStatusCode:201];
+
+    NSURL *expectedURL = [self.url URLByAppendingPathComponent:@"push/installations"];
+    expectedURL = [expectedURL URLByAppendingPathComponent:self.client.installId];
+
+    MSInstallation *installation = [MSInstallation installationWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:nil tags:nil templates:nil];
+
+    filter.onInspectRequest = ^(NSURLRequest *request) {
+        XCTAssertEqualObjects(request.HTTPMethod, @"PUT");
+        XCTAssertEqualObjects(request.URL, expectedURL);
+
+        NSString *bodyString = [[NSString alloc] initWithData:request.HTTPBody
+                                                     encoding:NSUTF8StringEncoding];
+
+        // Check if body contains required fields
+        XCTAssertTrue([bodyString containsString:@"\"installationId\":"]);
+        XCTAssertTrue([bodyString containsString:@"\"platform\":\"apns\""]);
+        XCTAssertTrue([bodyString containsString:@"\"pushChannel\":\"channel\""]);
+
+        return request;
+    };
+
+    MSClient *testClient = [self.client clientWithFilter:filter];
+
+    [testClient.push registerInstallation:installation completion:^(NSError *error) {
+        XCTAssertNil(error);
+        self.done = YES;
+    }];
+
+    XCTAssertTrue([self waitForTest:15], @"Test timed out.");
+}
+
+-(void) testRegisterInstallationWithPushVariables
+{
+    MSTestFilter *filter = [MSTestFilter testFilterWithStatusCode:201];
+
+    NSURL *expectedURL = [self.url URLByAppendingPathComponent:@"push/installations"];
+    expectedURL = [expectedURL URLByAppendingPathComponent:self.client.installId];
+
+    NSDictionary *pushVariables = @{@"key1":@"value1",@"key2":@"value2"};
+
+    MSInstallation *installation = [MSInstallation installationWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:pushVariables tags:nil templates:nil];
+
+    filter.onInspectRequest = ^(NSURLRequest *request) {
+        XCTAssertEqualObjects(request.HTTPMethod, @"PUT");
+        XCTAssertEqualObjects(request.URL, expectedURL);
+
+        NSString *bodyString = [[NSString alloc] initWithData:request.HTTPBody
+                                                     encoding:NSUTF8StringEncoding];
+
+        // Check if body contains push variables
+        XCTAssertTrue([bodyString containsString:@"\"pushVariables\":{\"key1\":\"value1\",\"key2\":\"value2\"}"]);
+
+        return request;
+    };
+
+    MSClient *testClient = [self.client clientWithFilter:filter];
+
+    [testClient.push registerInstallation:installation completion:^(NSError *error) {
+        XCTAssertNil(error);
+        self.done = YES;
+    }];
+
+    XCTAssertTrue([self waitForTest:15], @"Test timed out.");
+}
+
+-(void) testRegisterInstallationWithTags
+{
+    MSTestFilter *filter = [MSTestFilter testFilterWithStatusCode:201];
+
+    NSURL *expectedURL = [self.url URLByAppendingPathComponent:@"push/installations"];
+    expectedURL = [expectedURL URLByAppendingPathComponent:self.client.installId];
+
+    NSArray *tags = @[@"topics:my-first-tag", @"topics:my-second-tag"];
+    MSInstallation *installation = [MSInstallation installationWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:nil tags:tags templates:nil];
+
+    filter.onInspectRequest = ^(NSURLRequest *request) {
+        XCTAssertEqualObjects(request.HTTPMethod, @"PUT");
+        XCTAssertEqualObjects(request.URL, expectedURL);
+
+        NSString *bodyString = [[NSString alloc] initWithData:request.HTTPBody
+                                                     encoding:NSUTF8StringEncoding];
+
+        // Check if body contains tags
+        XCTAssertTrue([bodyString containsString:@"\"tags\":[\"topics:my-first-tag\",\"topics:my-second-tag\""]);
+
+        return request;
+    };
+
+    MSClient *testClient = [self.client clientWithFilter:filter];
+
+    [testClient.push registerInstallation:installation completion:^(NSError *error) {
+        XCTAssertNil(error);
+        self.done = YES;
+    }];
+
+    XCTAssertTrue([self waitForTest:15], @"Test timed out.");
+}
+
+-(void) testRegisterInstallationWithTemplates
+{
+    MSTestFilter *filter = [MSTestFilter testFilterWithStatusCode:201];
+
+    NSURL *expectedURL = [self.url URLByAppendingPathComponent:@"push/installations"];
+    expectedURL = [expectedURL URLByAppendingPathComponent:self.client.installId];
+
+    NSArray *tags = @[@"topics:my-first-tag", @"topics:my-second-tag"];
+    MSInstallationTemplate *template = [MSInstallationTemplate installationTemplateWithBody:@"body" expiry:@"expiry" tags:tags];
+    NSDictionary *templates = @{@"templateName":template};
+
+    MSInstallation *installation = [MSInstallation installationWithInstallationId:self.client.installId platform:@"apns" pushChannel:@"channel" pushVariables:nil tags:nil templates:templates];
+
+    filter.onInspectRequest = ^(NSURLRequest *request) {
+        XCTAssertEqualObjects(request.HTTPMethod, @"PUT");
+        XCTAssertEqualObjects(request.URL, expectedURL);
+
+        NSString *bodyString = [[NSString alloc] initWithData:request.HTTPBody
+                                                     encoding:NSUTF8StringEncoding];
+
+        // Check if body contains templates
+        XCTAssertTrue([bodyString containsString:@"\"templates\":{\"templateName\":{\"body\":\"body\",\"tags\":[\"topics:my-first-tag\",\"topics:my-second-tag\"]"]);
+        
+        return request;
+    };
+    
+    MSClient *testClient = [self.client clientWithFilter:filter];
+    
+    [testClient.push registerInstallation:installation completion:^(NSError *error) {
+        XCTAssertNil(error);
         self.done = YES;
     }];
     

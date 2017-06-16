@@ -60,6 +60,29 @@
     }
 }
 
+- (void) registerInstallation:(MSInstallation *)installation completion:(MSCompletionBlock)completion
+{
+    // Verify the installation is present
+    if (!installation) {
+        if (completion) {
+            completion([self errorForMissingParameterWithParameterName:@"installation"]);
+        }
+        return;
+    }
+
+    // Create the request
+    MSPushRequest *request = [MSPushRequest requestToRegisterInstallation:installation
+                                                                     push:self
+                                                               completion:completion];
+    // Send the request
+    if (request) {
+        MSPushConnection *connection = [MSPushConnection connectionWithRegistrationRequest:request
+                                                                                    client:self.client
+                                                                                completion:completion];
+        [connection start];
+    }
+}
+
 - (void) unregisterWithCompletion:(MSCompletionBlock)completion
 {
     // Create the request
