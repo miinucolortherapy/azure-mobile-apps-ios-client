@@ -287,7 +287,7 @@ static NSString *topicNews = @"topic:News";
                           }];
   };
 
-  return[ZumoTest createTestWithName:@"RegisterUnregister" andExecution:testExecution];
+  return [ZumoTest createTestWithName:@"RegisterUnregister" andExecution:testExecution];
 }
 
 + (ZumoTest *)createRegisterUnregisterWithInstallationTest
@@ -354,7 +354,7 @@ static NSString *topicNews = @"topic:News";
                            }];
   };
 
-  return[ZumoTest createTestWithName:@"RegisterUnregisterWithInstallation" andExecution:testExecution];
+  return [ZumoTest createTestWithName:@"RegisterUnregisterWithInstallation" andExecution:testExecution];
 }
 
 + (ZumoTest *)createRegisterLoginTest
@@ -445,7 +445,7 @@ static NSString *topicNews = @"topic:News";
            completion:getLoginInfo];
   };
 
-  return[ZumoTest createTestWithName:@"RegisterLogin" andExecution:testExecution];
+  return [ZumoTest createTestWithName:@"RegisterLogin" andExecution:testExecution];
 }
 
 + (ZumoTest *)createTemplateRegisterUnregisterTest
