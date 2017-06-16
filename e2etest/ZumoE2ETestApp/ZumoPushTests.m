@@ -708,7 +708,7 @@ static NSString *topicNews = @"topic:News";
 
         NSString *installId = [[NSUserDefaults standardUserDefaults] stringForKey:@"WindowsAzureMobileServicesInstallationId"];
         NSString *pushChannel = [ZumoPushTests convertDeviceToken:deviceToken];
-        MSInstallationTemplate *template = [MSInstallationTemplate installationTemplateWithBody:@"data:{message:{user:$(fullName)}}" expiry:nil tags:nil];
+        MSInstallationTemplate *template = [MSInstallationTemplate installationTemplateWithBody:@"{\"aps\": {\"alert\": \"$(message)\"}}" expiry:nil tags:nil];
         MSInstallation *installation = [MSInstallation installationWithInstallationId:installId
                                                                              platform:@"apns"
                                                                           pushChannel:pushChannel
@@ -728,7 +728,7 @@ static NSString *topicNews = @"topic:News";
                                                          test:test
                                                       seconds:0
                                                   deviceToken:client.push.installationId
-                                                      payload:@{ @"aps": @{ @"alert": @"push template no tags received" }, @"fullName":@"John Doe" }
+                                                      payload:@{ @"aps": @{ @"message": @"From template" } }
                                                          tags:topicSports
                                                    completion:completion
                                                    isNegative:NO];
