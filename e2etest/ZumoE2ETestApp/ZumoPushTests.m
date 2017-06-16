@@ -633,6 +633,7 @@ static NSString *topicNews = @"topic:News";
 
   return [ZumoTest createTestWithName:@"PushWithInstallationNoTemplateOrTags" andExecution:testExecution];
 }
+
 + (ZumoTest *)createPushWithInstallationTagsNoTemplateTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
     MSClient *client = [[ZumoTestGlobals sharedInstance] client];
@@ -671,6 +672,7 @@ static NSString *topicNews = @"topic:News";
 
   return [ZumoTest createTestWithName:@"PushWithInstallationTagsNoTemplate" andExecution:testExecution];
 }
+
 + (ZumoTest *)createPushWithInstallationTemplateNoTagsTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
     MSClient *client = [[ZumoTestGlobals sharedInstance] client];
@@ -710,6 +712,7 @@ static NSString *topicNews = @"topic:News";
 
   return [ZumoTest createTestWithName:@"PushWithInstallationTemplateNoTags" andExecution:testExecution];
 }
+
 + (ZumoTest *)createPushWithInstallationTagsAndTemplateTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
     MSClient *client = [[ZumoTestGlobals sharedInstance] client];
@@ -750,11 +753,9 @@ static NSString *topicNews = @"topic:News";
   return [ZumoTest createTestWithName:@"PushWithInstallationTagsAndTemplate" andExecution:testExecution];
 }
 
-
 + (NSString *)groupDescription {
   return @"Tests to validate that the server-side push module can correctly deliver messages to the iOS client.";
 }
-
 
 + (NSData *)bytesFromHexString:(NSString *)hexString;
 {
