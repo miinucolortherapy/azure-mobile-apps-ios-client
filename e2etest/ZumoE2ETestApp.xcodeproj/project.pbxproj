@@ -290,7 +290,6 @@
 				ORGANIZATIONNAME = Microsoft;
 				TargetAttributes = {
 					872B02B91672A73B003613A1 = {
-						DevelopmentTeam = 285W24646W;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -464,7 +463,7 @@
 				CODE_SIGN_ENTITLEMENTS = ZumoE2ETestApp/ZumoE2ETestApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 285W24646W;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -493,7 +492,7 @@
 				CODE_SIGN_ENTITLEMENTS = ZumoE2ETestApp/ZumoE2ETestApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 285W24646W;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
