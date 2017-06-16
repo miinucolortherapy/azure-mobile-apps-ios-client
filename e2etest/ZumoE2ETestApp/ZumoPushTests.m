@@ -118,7 +118,6 @@ static NSString *tableName = @"iosPushTest";
 static NSString *pushClientKey = @"PushClientKey";
 
 static NSString *topicSports = @"topic:Sports";
-static NSString *topicNews = @"topic:News";
 
 + (NSArray *)createTests {
   NSMutableArray *result = [NSMutableArray new];
@@ -179,21 +178,15 @@ static NSString *topicNews = @"topic:News";
 
 + (void)sendNotification:(MSClient *)client
                     test:(ZumoTest *)test
-                    type:(NSString *) type
+                    type:(NSString *)type
                  seconds:(int)seconds
              deviceToken:(NSString *)deviceToken
                  payload:(NSDictionary *)payload
          expectedPayload:(NSDictionary *)expectedPayload
                     tags:(NSString*)tag
               completion:(ZumoTestCompletion)completion
-              isNegative:(BOOL)isNegative
-{
-
+              isNegative:(BOOL)isNegative {
   [test addLog:[NSString stringWithFormat:@"Sending push request to API 'push'"]];
-  if (type == nil){
-    type = @"apns";
-  }
-
   NSMutableDictionary *item = @{@"method" : @"send", @"type" : type, @"payload" : payload, @"token": deviceToken, @"delay": @(seconds)}.mutableCopy;
 
   if (tag) {
@@ -226,8 +219,7 @@ static NSString *topicNews = @"topic:News";
    }];
 }
 
-+ (ZumoTest *)createRegisterUnregisterTest
-{
++ (ZumoTest *)createRegisterUnregisterTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
     MSClient *client = [[ZumoTestGlobals sharedInstance] client];
     NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
@@ -290,8 +282,7 @@ static NSString *topicNews = @"topic:News";
   return [ZumoTest createTestWithName:@"RegisterUnregister" andExecution:testExecution];
 }
 
-+ (ZumoTest *)createRegisterUnregisterWithInstallationTest
-{
++ (ZumoTest *)createRegisterUnregisterWithInstallationTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
     MSClient *client = [[ZumoTestGlobals sharedInstance] client];
     NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
@@ -357,8 +348,7 @@ static NSString *topicNews = @"topic:News";
   return [ZumoTest createTestWithName:@"RegisterUnregisterWithInstallation" andExecution:testExecution];
 }
 
-+ (ZumoTest *)createRegisterLoginTest
-{
++ (ZumoTest *)createRegisterLoginTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
     MSClient *client = [[ZumoTestGlobals sharedInstance] client];
     NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
@@ -448,8 +438,7 @@ static NSString *topicNews = @"topic:News";
   return [ZumoTest createTestWithName:@"RegisterLogin" andExecution:testExecution];
 }
 
-+ (ZumoTest *)createTemplateRegisterUnregisterTest
-{
++ (ZumoTest *)createTemplateRegisterUnregisterTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
     MSClient *client = [[ZumoTestGlobals sharedInstance] client];
     NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
@@ -601,34 +590,14 @@ static NSString *topicNews = @"topic:News";
 
 + (ZumoTest *)createPushWithInstallationNoTemplateOrTagsTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
-    MSClient *client = [[ZumoTestGlobals sharedInstance] client];
-    NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
-
-    NSString *installId = [[NSUserDefaults standardUserDefaults] stringForKey:@"WindowsAzureMobileServicesInstallationId"];
-    NSString *pushChannel = [ZumoPushTests convertDeviceToken:deviceToken];
-    MSInstallation *installation = [MSInstallation installationWithInstallationId:installId platform:@"apns" pushChannel:pushChannel pushVariables:nil tags:nil templates:nil];
-    [client.push registerInstallation:installation
-                           completion:^(NSError *error) {
-                             // Verify register call succeeded
-                             if (error) {
-                               [test addLog:[NSString stringWithFormat:@"Encountered error registering with Mobile Service: %@", error.description]];
-                               [test setTestStatus:TSFailed];
-                               completion(NO);
-                               return;
-                             } else {
-                               [self sendNotification:client
-                                                 test:test
-                                                 type:nil
-                                              seconds:0
-                                          deviceToken:client.push.installationId
-                                              payload:@{ @"aps": @{ @"alert": @"push no template or tags received" } }
-                                      expectedPayload:nil
-                                                 tags:nil
-                                           completion:completion
-                                           isNegative:NO];
-                             }
-                           }];
-
+    MSInstallation *installation = [self createInstallationWithTags:nil andTemplates:nil];
+    [self registerInstallationAndSendPushNotificationWithTest:test
+                                                 installation:installation
+                                                   completion:completion
+                                                     pushType:@"apns"
+                                                      payload:@{ @"aps": @{ @"alert": @"push no template no tags received" } }
+                                              expectedPayload:nil
+                                                         tags:nil];
   };
 
   return [ZumoTest createTestWithName:@"PushWithInstallationNoTemplateOrTags" andExecution:testExecution];
@@ -636,38 +605,14 @@ static NSString *topicNews = @"topic:News";
 
 + (ZumoTest *)createPushWithInstallationTagsNoTemplateTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
-    MSClient *client = [[ZumoTestGlobals sharedInstance] client];
-    NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
-
-    NSString *installId = [[NSUserDefaults standardUserDefaults] stringForKey:@"WindowsAzureMobileServicesInstallationId"];
-    NSString *pushChannel = [ZumoPushTests convertDeviceToken:deviceToken];
-    MSInstallation *installation = [MSInstallation installationWithInstallationId:installId
-                                                                         platform:@"apns"
-                                                                      pushChannel:pushChannel
-                                                                    pushVariables:nil
-                                                                             tags:@[ topicSports ]
-                                                                        templates:nil];
-    [client.push registerInstallation:installation
-                           completion:^(NSError *error) {
-                             // Verify register call succeeded
-                             if (error) {
-                               [test addLog:[NSString stringWithFormat:@"Encountered error registering with Mobile Service: %@", error.description]];
-                               [test setTestStatus:TSFailed];
-                               completion(NO);
-                               return;
-                             } else {
-                               [self sendNotification:client
-                                                 test:test
-                                                 type:nil
-                                              seconds:0
-                                          deviceToken:client.push.installationId
-                                              payload:@{ @"aps": @{ @"alert": @"push tags received" } }
-                                      expectedPayload:nil
-                                                 tags:topicSports
-                                           completion:completion
-                                           isNegative:NO];
-                             }
-                           }];
+    MSInstallation *installation = [self createInstallationWithTags:@[topicSports] andTemplates:nil];
+    [self registerInstallationAndSendPushNotificationWithTest:test
+                                                 installation:installation
+                                                   completion:completion
+                                                     pushType:@"apns"
+                                                      payload:@{ @"aps": @{ @"alert": @"push tags received" } }
+                                              expectedPayload:nil
+                                                         tags:topicSports];
   };
 
   return [ZumoTest createTestWithName:@"PushWithInstallationTagsNoTemplate" andExecution:testExecution];
@@ -675,39 +620,15 @@ static NSString *topicNews = @"topic:News";
 
 + (ZumoTest *)createPushWithInstallationTemplateNoTagsTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
-    MSClient *client = [[ZumoTestGlobals sharedInstance] client];
-    NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
-
-    NSString *installId = [[NSUserDefaults standardUserDefaults] stringForKey:@"WindowsAzureMobileServicesInstallationId"];
-    NSString *pushChannel = [ZumoPushTests convertDeviceToken:deviceToken];
     MSInstallationTemplate *template = [MSInstallationTemplate installationTemplateWithBody:@"{\"aps\": {\"alert\": \"$(message)\"}}" expiry:nil tags:nil];
-    MSInstallation *installation = [MSInstallation installationWithInstallationId:installId
-                                                                         platform:@"apns"
-                                                                      pushChannel:pushChannel
-                                                                    pushVariables:nil
-                                                                             tags:nil
-                                                                        templates:@{@"template":template}];
-    [client.push registerInstallation:installation
-                           completion:^(NSError *error) {
-                             // Verify register call succeeded
-                             if (error) {
-                               [test addLog:[NSString stringWithFormat:@"Encountered error registering with Mobile Service: %@", error.description]];
-                               [test setTestStatus:TSFailed];
-                               completion(NO);
-                               return;
-                             } else {
-                               [self sendNotification:client
-                                                 test:test
-                                                 type:@"template"
-                                              seconds:0
-                                          deviceToken:client.push.installationId
-                                              payload:@{@"message":@"From template"}
-                                      expectedPayload:@{@"aps": @{@"alert": @"From template"}}
-                                                 tags:nil
-                                           completion:completion
-                                           isNegative:NO];
-                             }
-                           }];
+    MSInstallation *installation = [self createInstallationWithTags:nil andTemplates:@{@"template":template}];
+    [self registerInstallationAndSendPushNotificationWithTest:test
+                                                 installation:installation
+                                                   completion:completion
+                                                     pushType:@"template"
+                                                      payload:@{@"message":@"From template"}
+                                              expectedPayload:@{@"aps": @{@"alert": @"From template"}}
+                                                         tags:nil];
   };
 
   return [ZumoTest createTestWithName:@"PushWithInstallationTemplateNoTags" andExecution:testExecution];
@@ -715,50 +636,71 @@ static NSString *topicNews = @"topic:News";
 
 + (ZumoTest *)createPushWithInstallationTagsAndTemplateTest {
   ZumoTestExecution testExecution = ^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
-    MSClient *client = [[ZumoTestGlobals sharedInstance] client];
-    NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
-
-    NSString *installId = [[NSUserDefaults standardUserDefaults] stringForKey:@"WindowsAzureMobileServicesInstallationId"];
-    NSString *pushChannel = [ZumoPushTests convertDeviceToken:deviceToken];
     MSInstallationTemplate *template = [MSInstallationTemplate installationTemplateWithBody:@"{\"aps\": {\"alert\": \"$(message)\"}}" expiry:nil tags:nil];
-    MSInstallation *installation = [MSInstallation installationWithInstallationId:installId
-                                                                         platform:@"apns"
-                                                                      pushChannel:pushChannel
-                                                                    pushVariables:nil
-                                                                             tags:@[ topicSports ]
-                                                                        templates:@{ @"template":template }];
-    [client.push registerInstallation:installation
-                           completion:^(NSError *error) {
-                             // Verify register call succeeded
-                             if (error) {
-                               [test addLog:[NSString stringWithFormat:@"Encountered error registering with Mobile Service: %@", error.description]];
-                               [test setTestStatus:TSFailed];
-                               completion(NO);
-                               return;
-                             } else {
-                               [self sendNotification:client
-                                                 test:test
-                                                 type:@"template"
-                                              seconds:0
-                                          deviceToken:client.push.installationId
-                                              payload:@{@"message": @"From template"}
-                                      expectedPayload:@{@"aps": @{@"alert": @"From template"}}
-                                                 tags:topicSports
-                                           completion:completion
-                                           isNegative:NO];
-                             }
-                           }];
+    MSInstallation *installation = [self createInstallationWithTags:@[topicSports] andTemplates:@{@"template":template}];
+    [self registerInstallationAndSendPushNotificationWithTest:test
+                                                 installation:installation
+                                                   completion:completion
+                                                     pushType:@"template"
+                                                      payload:@{@"message": @"From template"}
+                                              expectedPayload:@{@"aps": @{@"alert": @"From template"}}
+                                                         tags:topicSports];
   };
 
   return [ZumoTest createTestWithName:@"PushWithInstallationTagsAndTemplate" andExecution:testExecution];
+}
+
++ (MSInstallation *) createInstallationWithTags:(NSArray *)tags andTemplates:(NSDictionary *)templates {
+  NSData *deviceToken = [[ZumoTestGlobals sharedInstance] deviceToken];
+
+  NSString *installId = [[NSUserDefaults standardUserDefaults] stringForKey:@"WindowsAzureMobileServicesInstallationId"];
+  NSString *pushChannel = [ZumoPushTests convertDeviceToken:deviceToken];
+  MSInstallation *installation = [MSInstallation installationWithInstallationId:installId
+                                                                       platform:@"apns"
+                                                                    pushChannel:pushChannel
+                                                                  pushVariables:nil
+                                                                           tags:tags
+                                                                      templates:templates];
+  return installation;
+}
+
++ (void) registerInstallationAndSendPushNotificationWithTest:(ZumoTest *)test
+                                                installation:(MSInstallation *)installation
+                                                  completion:(ZumoTestCompletion)completion
+                                                    pushType:(NSString *)pushType
+                                                     payload:(NSDictionary *)payload
+                                             expectedPayload:(NSDictionary *)expectedPayload
+                                                        tags:(NSString *)tags {
+  MSClient *client = [[ZumoTestGlobals sharedInstance] client];
+  [client.push registerInstallation:installation
+                         completion:^(NSError *error) {
+                           // Verify register call succeeded
+                           if (error) {
+                             [test addLog:[NSString stringWithFormat:@"Encountered error registering with Mobile Service: %@", error.description]];
+                             [test setTestStatus:TSFailed];
+                             completion(NO);
+                             return;
+                           } else {
+                             [self sendNotification:client
+                                               test:test
+                                               type:pushType
+                                            seconds:0
+                                        deviceToken:client.push.installationId
+                                            payload:payload
+                                    expectedPayload:expectedPayload
+                                               tags:tags
+                                         completion:completion
+                                         isNegative:NO];
+                           }
+                         }];
+
 }
 
 + (NSString *)groupDescription {
   return @"Tests to validate that the server-side push module can correctly deliver messages to the iOS client.";
 }
 
-+ (NSData *)bytesFromHexString:(NSString *)hexString;
-{
++ (NSData *)bytesFromHexString:(NSString *)hexString {
   NSMutableData* data = [NSMutableData data];
   for (int idx = 0; idx+2 <= hexString.length; idx+=2) {
     NSRange range = NSMakeRange(idx, 2);
@@ -771,8 +713,7 @@ static NSString *topicNews = @"topic:News";
   return data;
 }
 
-+ (NSString *)convertDeviceToken:(NSData *)deviceTokenData
-{
++ (NSString *)convertDeviceToken:(NSData *)deviceTokenData {
   NSCharacterSet *hexFormattingCharacters = [NSCharacterSet characterSetWithCharactersInString:@"<>"];
   NSString* newDeviceToken = [[[[deviceTokenData description]
                                 stringByTrimmingCharactersInSet:hexFormattingCharacters]
