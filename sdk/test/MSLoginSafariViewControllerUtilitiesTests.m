@@ -25,7 +25,7 @@
 
 - (void)testLoginURLWithParameters
 {
-    NSURL *applicationURL = [[NSURL alloc] initWithString:@"https://example.azurewebsites.net"];
+    NSURL *loginURL = [[NSURL alloc] initWithString:@"https://example.azurewebsites.net/.auth/login"];
     NSString *provider = @"aad";
     NSString *urlScheme = @"ZumoE2ETest";
     NSDictionary *parameters = @{ @"param1":@"value1", @"param2":@"value2", @"param3":@"value3" };
@@ -35,7 +35,7 @@
     NSURL *expectedLoginURL = [[NSURL alloc] initWithString:@"https://example.azurewebsites.net/.auth/login/aad?param2=value2&post_login_redirect_url=ZumoE2ETest%3A%2F%2Feasyauth.callback&code_challenge=4iF9Pk4SDGozcqGJDwPiMrNa1lnXH3piUBpO4gSj5m0%3D&param3=value3&code_challenge_method=S256&param1=value1"];
     
     XCTAssertEqualObjects(expectedLoginURL, [MSLoginSafariViewControllerUtilities
-                         loginURLFromApplicationURL:applicationURL
+                         fullURLFromLoginURL:loginURL
                          provider:provider
                          urlScheme:urlScheme
                          parameters:parameters
@@ -45,7 +45,7 @@
 
 - (void)testLoginURLWithoutParameters
 {
-    NSURL *applicationURL = [[NSURL alloc] initWithString:@"https://example.azurewebsites.net"];
+    NSURL *loginURL = [[NSURL alloc] initWithString:@"https://example.azurewebsites.net/.auth/login"];
     NSString *provider = @"aad";
     NSString *urlScheme = @"ZumoE2ETest";
     NSString *codeVerifier = @"67890";
@@ -54,7 +54,7 @@
     NSURL *expectedLoginURL = [[NSURL alloc] initWithString:@"https://example.azurewebsites.net/.auth/login/aad?code_challenge=4iF9Pk4SDGozcqGJDwPiMrNa1lnXH3piUBpO4gSj5m0%3D&post_login_redirect_url=ZumoE2ETest%3A%2F%2Feasyauth.callback&code_challenge_method=S256"];
     
     XCTAssertEqualObjects(expectedLoginURL, [MSLoginSafariViewControllerUtilities
-                                             loginURLFromApplicationURL:applicationURL
+                                             fullURLFromLoginURL:loginURL
                                              provider:provider
                                              urlScheme:urlScheme
                                              parameters:nil

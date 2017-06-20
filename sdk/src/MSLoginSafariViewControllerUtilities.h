@@ -8,11 +8,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- Generate URL for |MSSafariViewController| login from
- application URL, identity provider name, custom URL scheme,
+ Generate full URL for |MSSafariViewController| login from
+ login URL, identity provider name, custom URL scheme,
  login parameters, code verifier and code challenge method
 
- @param applicationURL
+ @param loginURL
  @param provider The identity provider
  @param urlScheme The url scheme
  @param parameters NSDictionary representation of extra login parameters
@@ -20,12 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
  @param codeChallengeMethod to be used in Proof Key for Code Exchange protocol of OAuth 2.0
  @return login URL
  */
-+ (NSURL *)loginURLFromApplicationURL:(NSURL *)applicationURL
-                             provider:(NSString *)provider
-                            urlScheme:(NSString *)urlScheme
-                           parameters:(nullable NSDictionary *)parameters
-                         codeVerifier:(NSString *)codeVerifier
-                  codeChallengeMethod:(NSString *)codeChallengeMethod;
++ (NSURL *)fullURLFromLoginURL:(NSURL *)loginURL
+                      provider:(NSString *)provider
+                     urlScheme:(NSString *)urlScheme
+                    parameters:(nullable NSDictionary *)parameters
+                  codeVerifier:(NSString *)codeVerifier
+           codeChallengeMethod:(NSString *)codeChallengeMethod;
 
 
 /**
