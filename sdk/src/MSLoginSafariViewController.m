@@ -4,7 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #import <SafariServices/SafariServices.h>
-#import "MSClient.h"
+#import "MSClientInternal.h"
 #import "MSLoginSafariViewController.h"
 #import "MSLoginSafariViewControllerUtilities.h"
 #import "MSAuthState.h"
@@ -109,12 +109,12 @@
                                                  urlScheme:urlScheme
                                                   animated:animated];
     
-    NSURL *loginURL = [MSLoginSafariViewControllerUtilities loginURLFromApplicationURL:self.client.applicationURL
-                                                                              provider:self.authState.provider
-                                                                             urlScheme:urlScheme
-                                                                            parameters:parameters
-                                                                          codeVerifier:self.authState.codeVerifier
-                                                                   codeChallengeMethod:@"S256"];
+    NSURL *fullURL = [MSLoginSafariViewControllerUtilities fullURLFromLoginURL:self.client.loginURL
+                                                                      provider:self.authState.provider
+                                                                     urlScheme:urlScheme
+                                                                    parameters:parameters
+                                                                  codeVerifier:self.authState.codeVerifier
+                                                           codeChallengeMethod:@"S256"];
     
     // SFSafariViewController is part of SafariServices API, where as
     // SafariServices API is only available on iOS 9 or later, not iOS 8 or prior.
@@ -122,7 +122,7 @@
     
     if ([SFSafariViewController class]) {
         
-        self.safariViewController = [[SFSafariViewController alloc] initWithURL:loginURL entersReaderIfAvailable:NO];
+        self.safariViewController = [[SFSafariViewController alloc] initWithURL:fullURL entersReaderIfAvailable:NO];
         
         self.safariViewController.delegate = self;
         
@@ -137,7 +137,7 @@
 
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-        BOOL openedSafari = [[UIApplication sharedApplication] openURL:loginURL];
+        BOOL openedSafari = [[UIApplication sharedApplication] openURL:fullURL];
 #pragma clang diagnostic pop
         
         if (!openedSafari) {

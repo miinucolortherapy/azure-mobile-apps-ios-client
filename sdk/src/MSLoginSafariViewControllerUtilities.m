@@ -6,7 +6,6 @@
 #import <SafariServices/SafariServices.h>
 #import <Security/SecRandom.h>
 #import <CommonCrypto/CommonDigest.h>
-#import "MSClient.h"
 #import "MSLoginSafariViewControllerUtilities.h"
 #import "MSURLBuilder.h"
 
@@ -24,14 +23,14 @@ NSUInteger const ByteLength = 32;
 
 @implementation MSLoginSafariViewControllerUtilities
 
-+ (NSURL *)loginURLFromApplicationURL:(NSURL *)applicationURL
-                             provider:(NSString *)provider
-                            urlScheme:(NSString *)urlScheme
-                           parameters:(nullable NSDictionary *)parameters
-                         codeVerifier:(NSString *)codeVerifier
-                  codeChallengeMethod:(NSString *)codeChallengeMethod
++ (NSURL *)fullURLFromLoginURL:(NSURL *)loginURL
+                      provider:(NSString *)provider
+                     urlScheme:(NSString *)urlScheme
+                    parameters:(nullable NSDictionary *)parameters
+                  codeVerifier:(NSString *)codeVerifier
+           codeChallengeMethod:(NSString *)codeChallengeMethod
 {
-    NSURL *loginURL = nil;
+    NSURL *fullURL = nil;
 
     if ([self isValidURLScheme:urlScheme]) {
 
@@ -46,12 +45,12 @@ NSUInteger const ByteLength = 32;
         if (parameters) {
             [params addEntriesFromDictionary:parameters];
         }
+      
+        fullURL = [loginURL URLByAppendingPathComponent:provider];
         
-        loginURL = [applicationURL URLByAppendingPathComponent:[NSString stringWithFormat:@".auth/login/%@", provider]];
-        
-        loginURL = [MSURLBuilder URLByAppendingQueryParameters:params toURL:loginURL];
+        fullURL = [MSURLBuilder URLByAppendingQueryParameters:params toURL:fullURL];
     }
-    return loginURL;
+    return fullURL;
 }
 
 + (BOOL)isRedirectURLValid:(NSURL *)URL withUrlScheme:(NSString *)urlScheme
