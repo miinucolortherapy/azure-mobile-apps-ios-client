@@ -5,6 +5,7 @@
 #import "ZumoLoginTests.h"
 #import "ZumoTest.h"
 #import "ZumoTestGlobals.h"
+#import "ZumoTestGoogleSignInDelegate.h"
 
 @interface TimerTarget : NSObject
 {
@@ -49,19 +50,22 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
     [result addObject:[self createLogoutTest]];
     [result addObject:[self createCRUDTestForProvider:nil forTable:@"public" ofType:ZumoTableAnonymous andAuthenticated:NO]];
     [result addObject:[self createCRUDTestForProvider:nil forTable:@"authenticated" ofType:ZumoTableAuthenticated andAuthenticated:NO]];
-    
+
     NSInteger indexOfLastUnattendedTest = [result count];
     
     result = [self createServerLoginFlowAndClientLoginFlowForProvider:@"facebook" tests:result];
-    
+
     result = [self createServerLoginFlowAndClientLoginFlowForProvider:@"twitter" tests:result];
     
     result = [self createServerLoginRefreshTokenFlowForProvider:@"microsoftaccount" tests:result];
 
     result = [self createServerLoginRefreshTokenFlowForProvider:@"aad" tests:result];
-    
+
     result = [self createServerLoginRefreshTokenFlowForProvider:@"google" tests:result];
-    
+
+    [result addObject:[self createGoogleClientFlowAuthTest]];
+    [result addObject:[self createCRUDTestForProvider:@"google" forTable:@"authenticated" ofType:ZumoTableAuthenticated andAuthenticated:YES]];
+
     for (NSInteger i = indexOfLastUnattendedTest; i < [result count]; i++) {
         ZumoTest *test = result[i];
         [test setCanRunUnattended:NO];
@@ -123,6 +127,31 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
     
     return tests;
 }
+
++ (ZumoTest *)createGoogleClientFlowAuthTest {
+    return [ZumoTest createTestWithName:@"GoogleClientAuthTest" andExecution:^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
+        ZumoTestGoogleSignInDelegate *delegate = [GIDSignIn sharedInstance].delegate;
+        [delegate setZumoTest:test completion:completion andAzureLoginBlock:^(GIDGoogleUser *user){
+            if (user.serverAuthCode == nil){
+                [test addLog:@"Error authenticating with Google: Server authorization code is nil"];
+                completion(NO);
+            }
+            NSDictionary *payload = @{ @"id_token":user.authentication.idToken,@"authorization_code":user.serverAuthCode};
+            MSClient *client = [[ZumoTestGlobals sharedInstance] client];
+            [client loginWithProvider:@"google" token:payload completion:^(MSUser *user, NSError *error) {
+                if (error == nil){
+                    [test addLog:@"Google authentication successful"];
+                    completion(YES);
+                } else {
+                    [test addLog:[NSString stringWithFormat:@"Error authenticating with Google: %@", error.localizedDescription]];
+                    completion(NO);
+                }
+            }];
+        }];
+        [[GIDSignIn sharedInstance] signIn];
+    }];
+}
+
 
 + (ZumoTest *)createSleepTest:(int)seconds {
     NSString *testName = [NSString stringWithFormat:@"Sleep for %d seconds", seconds];
@@ -348,7 +377,6 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
         [test addLog:@"Removed authentication-related cookies from this app."];
         completion(YES);
     }];
-
     return result;
 }
 
