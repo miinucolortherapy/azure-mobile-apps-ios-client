@@ -327,7 +327,7 @@
         MSAPIConnection *connection =
             [MSAPIConnection connectionWithApiRequest:request
                                                client:self
-                                               completion:completion];
+                                           completion:completion];
         [connection start];
     }
 }
