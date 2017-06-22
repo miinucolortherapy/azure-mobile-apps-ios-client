@@ -34,7 +34,7 @@
     return NO;
 }
 
-- (BOOL) deleteUsingQuery:(MSQuery *)query orError:(NSError *__autoreleasing *)error
+- (BOOL) deleteUsingQuery:(MSQuery *)query orError:(NSError **)error
 {
     self.deleteCalls++;
     

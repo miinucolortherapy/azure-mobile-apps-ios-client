@@ -134,20 +134,24 @@
     return properties;
 }
 
--(NSDictionary *)readTable:(NSString *)table withItemId:(NSString *)itemId orError:(NSError *__autoreleasing *)error
+-(NSDictionary *)readTable:(NSString *)table withItemId:(NSString *)itemId orError:(NSError **)error
 {
     __block NSDictionary *item;
+    __block NSError *internalError;
     [self.context performBlockAndWait:^{
-        NSManagedObject *rawItem = [self getRecordForTable:table itemId:itemId orError:error];
+        NSManagedObject *rawItem = [self getRecordForTable:table itemId:itemId orError:&internalError];
         if (rawItem) {
             item = [self tableItemFromManagedObject:rawItem];
         }
     }];
+    if (error && internalError) {
+        *error = internalError;
+    }
     
     return item;
 }
 
--(MSSyncContextReadResult *)readWithQuery:(MSQuery *)query orError:(NSError *__autoreleasing *)error
+-(MSSyncContextReadResult *)readWithQuery:(MSQuery *)query orError:(NSError **)error
 {
     __block NSInteger totalCount = -1;
     __block NSArray<NSDictionary *> *results;
@@ -234,21 +238,20 @@
     }
 }
 
--(BOOL) upsertItems:(NSArray<NSDictionary *> *)items table:(NSString *)table orError:(NSError *__autoreleasing *)error
+-(BOOL) upsertItems:(NSArray<NSDictionary *> *)items table:(NSString *)table orError:(NSError **)error
 {
     __block BOOL success;
+    __block NSError *internalError;
     [self.context performBlockAndWait:^{
         NSEntityDescription *entity = [NSEntityDescription entityForName:table inManagedObjectContext:self.context];
         if (!entity) {
-            if (error) {
-                *error = [MSCoreDataStore errorInvalidTable:table];
-            }
+            internalError = [MSCoreDataStore errorInvalidTable:table];
             return;
         }
         
         for (NSDictionary *item in items) {
-            NSManagedObject *managedItem = [self getRecordForTable:table itemId:[item objectForKey:MSSystemColumnId] orError:error];
-            if (error && *error) {
+            NSManagedObject *managedItem = [self getRecordForTable:table itemId:[item objectForKey:MSSystemColumnId] orError:&internalError];
+            if (internalError) {
                 // Reset since we may have made changes earlier
                 [self.context reset];
                 return;
@@ -268,17 +271,21 @@
             [self.context reset];
         }
     }];
-    
+    if (error && internalError) {
+        *error = internalError;
+    }
+  
     return success;
 }
 
 -(BOOL) deleteItemsWithIds:(NSArray<NSString *> *)items table:(NSString *)table orError:(NSError **)error
 {
     __block BOOL success;
+    __block NSError *internalError;
     [self.context performBlockAndWait:^{
         for (NSString *itemId in items) {
-            NSManagedObject *foundItem = [self getRecordForTable:table itemId:itemId orError:error];
-            if (error && *error) {
+            NSManagedObject *foundItem = [self getRecordForTable:table itemId:itemId orError:&internalError];
+            if (internalError) {
                 [self.context reset];
                 return;
             }
@@ -293,19 +300,21 @@
             [self.context reset];
         }
     }];
+    if (error && internalError) {
+        *error = internalError;
+    }
     
     return success;
 }
 
--(BOOL) deleteUsingQuery:(MSQuery *)query orError:(NSError *__autoreleasing *)error
+-(BOOL) deleteUsingQuery:(MSQuery *)query orError:(NSError **)error
 {
     __block BOOL success;
+    __block NSError *internalError;
     [self.context performBlockAndWait:^{
         NSEntityDescription *entity = [NSEntityDescription entityForName:query.syncTable.name inManagedObjectContext:self.context];
         if (!entity) {
-            if (error) {
-                *error = [MSCoreDataStore errorInvalidTable:query.syncTable.name];
-            }
+            internalError = [MSCoreDataStore errorInvalidTable:query.syncTable.name];
             return;
         }
         
@@ -329,12 +338,15 @@
             [self.context deleteObject:object];
         }
         
-        success = [self.context save:error];
+        success = [self.context save:&internalError];
         if (!success) {
             [self.context reset];
         }
     }];
-    
+    if (error && internalError) {
+        *error = internalError;
+    }
+  
     return success;
 }
 
