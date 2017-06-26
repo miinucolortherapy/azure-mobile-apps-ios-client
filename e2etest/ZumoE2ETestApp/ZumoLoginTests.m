@@ -61,10 +61,7 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
 
     result = [self createServerLoginRefreshTokenFlowForProvider:@"aad" tests:result];
 
-    result = [self createServerLoginRefreshTokenFlowForProvider:@"google" tests:result];
-
-    [result addObject:[self createGoogleClientFlowAuthTest]];
-    [result addObject:[self createCRUDTestForProvider:@"google" forTable:@"authenticated" ofType:ZumoTableAuthenticated andAuthenticated:YES]];
+    result = [self createGoogleLoginTests:result];
 
     for (NSInteger i = indexOfLastUnattendedTest; i < [result count]; i++) {
         ZumoTest *test = result[i];
@@ -128,8 +125,20 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
     return tests;
 }
 
++ (NSMutableArray *)createGoogleLoginTests:(NSMutableArray *)tests
+{
+    [tests addObject:[self createLogoutTest]];
+    [tests addObject:[self createSleepTest:1]];
+
+    // Client Login Flow
+    [tests addObject:[self createGoogleClientFlowAuthTest]];
+    [tests addObject:[self createCRUDTestForProvider:@"google" forTable:@"authenticated" ofType:ZumoTableAuthenticated andAuthenticated:YES]];
+
+    return tests;
+}
+
 + (ZumoTest *)createGoogleClientFlowAuthTest {
-    return [ZumoTest createTestWithName:@"GoogleClientAuthTest" andExecution:^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
+    return [ZumoTest createTestWithName:@"Login for Google - Client flow" andExecution:^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
         ZumoTestGoogleSignInDelegate *delegate = [GIDSignIn sharedInstance].delegate;
         [delegate setZumoTest:test completion:completion andAzureLoginBlock:^(GIDGoogleUser *user){
             if (user.serverAuthCode == nil){

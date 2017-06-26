@@ -28,7 +28,5 @@
         self.loginBlock(user);
     }
 }
--(void)dealloc {
-    [self.test addLog:@"ZumoTestGoogleSignInDelegate deallocating"];
-}
+
 @end
