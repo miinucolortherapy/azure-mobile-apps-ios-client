@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0044609E1C84D96600CB5A0F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0044609D1C84D96600CB5A0F /* WebKit.framework */; };
 		8099D2DA1EFBC6B8005F24D4 /* GoogleAppUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2D51EFBC6B8005F24D4 /* GoogleAppUtilities.framework */; };
-		8099D2DB1EFBC6B8005F24D4 /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8099D2D61EFBC6B8005F24D4 /* GoogleSignIn.bundle */; };
 		8099D2DC1EFBC6B8005F24D4 /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2D71EFBC6B8005F24D4 /* GoogleSignIn.framework */; };
 		8099D2DD1EFBC6B8005F24D4 /* GoogleSignInDependencies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2D81EFBC6B8005F24D4 /* GoogleSignInDependencies.framework */; };
 		8099D2DE1EFBC6B8005F24D4 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2D91EFBC6B8005F24D4 /* GoogleSymbolUtilities.framework */; };
@@ -56,7 +55,6 @@
 		0044609D1C84D96600CB5A0F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		806A17C41EEAA18100230146 /* ZumoE2ETestApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZumoE2ETestApp.entitlements; sourceTree = "<group>"; };
 		8099D2D51EFBC6B8005F24D4 /* GoogleAppUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppUtilities.framework; sourceTree = "<group>"; };
-		8099D2D61EFBC6B8005F24D4 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
 		8099D2D71EFBC6B8005F24D4 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignIn.framework; sourceTree = "<group>"; };
 		8099D2D81EFBC6B8005F24D4 /* GoogleSignInDependencies.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignInDependencies.framework; sourceTree = "<group>"; };
 		8099D2D91EFBC6B8005F24D4 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				8099D2D51EFBC6B8005F24D4 /* GoogleAppUtilities.framework */,
-				8099D2D61EFBC6B8005F24D4 /* GoogleSignIn.bundle */,
 				8099D2D71EFBC6B8005F24D4 /* GoogleSignIn.framework */,
 				8099D2D81EFBC6B8005F24D4 /* GoogleSignInDependencies.framework */,
 				8099D2D91EFBC6B8005F24D4 /* GoogleSymbolUtilities.framework */,
@@ -367,7 +364,6 @@
 			files = (
 				872B02C91672A73B003613A1 /* InfoPlist.strings in Resources */,
 				8099D2E41EFBC75C005F24D4 /* GoogleAuth-Info.plist in Resources */,
-				8099D2DB1EFBC6B8005F24D4 /* GoogleSignIn.bundle in Resources */,
 				872B02EE1673EE91003613A1 /* ZumoTestHelpViewController.xib in Resources */,
 				A2B509E4199C006600A914CF /* Main_iPhone.Storyboard in Resources */,
 				A3AD0B6D1BED91F900288E3D /* Launch Screen.storyboard in Resources */,
