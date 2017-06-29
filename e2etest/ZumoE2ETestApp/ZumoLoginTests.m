@@ -127,7 +127,7 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
 
 + (NSMutableArray *)createGoogleLoginTests:(NSMutableArray *)tests
 {
-    [tests addObject:[self createLogoutTest]];
+    [tests addObject:[self createGoogleLogoutTest]];
     [tests addObject:[self createSleepTest:1]];
 
     // Client Login Flow
@@ -144,6 +144,7 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
             if (user.serverAuthCode == nil){
                 [test addLog:@"Error authenticating with Google: Server authorization code is nil"];
                 completion(NO);
+                return;
             }
             NSDictionary *payload = @{ @"id_token":user.authentication.idToken,@"authorization_code":user.serverAuthCode};
             MSClient *client = [[ZumoTestGlobals sharedInstance] client];
@@ -161,6 +162,26 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
     }];
 }
 
++ (ZumoTest *)createGoogleLogoutTest {
+  ZumoTest *result = [ZumoTest createTestWithName:@"Google logout" andExecution:^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
+    MSClient *client = [[ZumoTestGlobals sharedInstance] client];
+    [client logoutWithCompletion:^(NSError *error) {
+      [test addLog:@"Logged out"];
+      [[GIDSignIn sharedInstance] signOut];
+      MSUser *loggedInUser = [client currentUser];
+      if (loggedInUser == nil) {
+        [test setTestStatus:TSPassed];
+        completion(YES);
+      } else {
+        [test addLog:[NSString stringWithFormat:@"Error, user for client is not null: %@", loggedInUser]];
+        [test setTestStatus:TSFailed];
+        completion(NO);
+      }
+    }];
+  }];
+
+  return result;
+}
 
 + (ZumoTest *)createSleepTest:(int)seconds {
     NSString *testName = [NSString stringWithFormat:@"Sleep for %d seconds", seconds];
