@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0044609E1C84D96600CB5A0F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0044609D1C84D96600CB5A0F /* WebKit.framework */; };
+		8099D2DA1EFBC6B8005F24D4 /* GoogleAppUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2D51EFBC6B8005F24D4 /* GoogleAppUtilities.framework */; };
+		8099D2DC1EFBC6B8005F24D4 /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2D71EFBC6B8005F24D4 /* GoogleSignIn.framework */; };
+		8099D2DD1EFBC6B8005F24D4 /* GoogleSignInDependencies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2D81EFBC6B8005F24D4 /* GoogleSignInDependencies.framework */; };
+		8099D2DE1EFBC6B8005F24D4 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2D91EFBC6B8005F24D4 /* GoogleSymbolUtilities.framework */; };
+		8099D2E11EFBC6CB005F24D4 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2DF1EFBC6CB005F24D4 /* SafariServices.framework */; };
+		8099D2E21EFBC6CB005F24D4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8099D2E01EFBC6CB005F24D4 /* SystemConfiguration.framework */; };
+		8099D2E41EFBC75C005F24D4 /* GoogleAuth-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8099D2E31EFBC75C005F24D4 /* GoogleAuth-Info.plist */; };
+		8099D2E71EFBD4AB005F24D4 /* ZumoTestGoogleSignInDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8099D2E61EFBD4AB005F24D4 /* ZumoTestGoogleSignInDelegate.m */; };
 		872B02BF1672A73B003613A1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872B02BE1672A73B003613A1 /* UIKit.framework */; };
 		872B02C11672A73B003613A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872B02C01672A73B003613A1 /* Foundation.framework */; };
 		872B02C31672A73B003613A1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872B02C21672A73B003613A1 /* CoreGraphics.framework */; };
@@ -46,6 +54,15 @@
 /* Begin PBXFileReference section */
 		0044609D1C84D96600CB5A0F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		806A17C41EEAA18100230146 /* ZumoE2ETestApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZumoE2ETestApp.entitlements; sourceTree = "<group>"; };
+		8099D2D51EFBC6B8005F24D4 /* GoogleAppUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppUtilities.framework; sourceTree = "<group>"; };
+		8099D2D71EFBC6B8005F24D4 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignIn.framework; sourceTree = "<group>"; };
+		8099D2D81EFBC6B8005F24D4 /* GoogleSignInDependencies.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignInDependencies.framework; sourceTree = "<group>"; };
+		8099D2D91EFBC6B8005F24D4 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		8099D2DF1EFBC6CB005F24D4 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		8099D2E01EFBC6CB005F24D4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8099D2E31EFBC75C005F24D4 /* GoogleAuth-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleAuth-Info.plist"; sourceTree = "<group>"; };
+		8099D2E51EFBD49C005F24D4 /* ZumoTestGoogleSignInDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZumoTestGoogleSignInDelegate.h; sourceTree = "<group>"; };
+		8099D2E61EFBD4AB005F24D4 /* ZumoTestGoogleSignInDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZumoTestGoogleSignInDelegate.m; sourceTree = "<group>"; };
 		872B02BA1672A73B003613A1 /* ZumoE2ETestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZumoE2ETestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		872B02BE1672A73B003613A1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		872B02C01672A73B003613A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -114,18 +131,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8099D2E11EFBC6CB005F24D4 /* SafariServices.framework in Frameworks */,
+				8099D2E21EFBC6CB005F24D4 /* SystemConfiguration.framework in Frameworks */,
 				0044609E1C84D96600CB5A0F /* WebKit.framework in Frameworks */,
 				A37A1C7A1C04D1FB007A5BC2 /* MicrosoftAzureMobile.framework in Frameworks */,
+				8099D2DE1EFBC6B8005F24D4 /* GoogleSymbolUtilities.framework in Frameworks */,
 				A2B509DD199ABF1A00A914CF /* MessageUI.framework in Frameworks */,
 				872B02BF1672A73B003613A1 /* UIKit.framework in Frameworks */,
+				8099D2DA1EFBC6B8005F24D4 /* GoogleAppUtilities.framework in Frameworks */,
 				872B02C11672A73B003613A1 /* Foundation.framework in Frameworks */,
+				8099D2DD1EFBC6B8005F24D4 /* GoogleSignInDependencies.framework in Frameworks */,
 				872B02C31672A73B003613A1 /* CoreGraphics.framework in Frameworks */,
+				8099D2DC1EFBC6B8005F24D4 /* GoogleSignIn.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8099D2D41EFBC662005F24D4 /* GoogleAuth */ = {
+			isa = PBXGroup;
+			children = (
+				8099D2D51EFBC6B8005F24D4 /* GoogleAppUtilities.framework */,
+				8099D2D71EFBC6B8005F24D4 /* GoogleSignIn.framework */,
+				8099D2D81EFBC6B8005F24D4 /* GoogleSignInDependencies.framework */,
+				8099D2D91EFBC6B8005F24D4 /* GoogleSymbolUtilities.framework */,
+			);
+			name = GoogleAuth;
+			sourceTree = "<group>";
+		};
 		872B02AF1672A73B003613A1 = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +180,9 @@
 		872B02BD1672A73B003613A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8099D2DF1EFBC6CB005F24D4 /* SafariServices.framework */,
+				8099D2E01EFBC6CB005F24D4 /* SystemConfiguration.framework */,
+				8099D2D41EFBC662005F24D4 /* GoogleAuth */,
 				0044609D1C84D96600CB5A0F /* WebKit.framework */,
 				A37A1C791C04D1FB007A5BC2 /* MicrosoftAzureMobile.framework */,
 				A2B509DC199ABF1A00A914CF /* MessageUI.framework */,
@@ -176,6 +213,8 @@
 				A2B509DE199B376C00A914CF /* ZumoTestResultViewController.h */,
 				A2B509DF199B376C00A914CF /* ZumoTestResultViewController.m */,
 				9C9E224D1E2E980700EC3A91 /* ZumoE2ETestApp-Bridging-Header.h */,
+				8099D2E51EFBD49C005F24D4 /* ZumoTestGoogleSignInDelegate.h */,
+				8099D2E61EFBD4AB005F24D4 /* ZumoTestGoogleSignInDelegate.m */,
 			);
 			path = ZumoE2ETestApp;
 			sourceTree = "<group>";
@@ -183,6 +222,7 @@
 		872B02C51672A73B003613A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8099D2E31EFBC75C005F24D4 /* GoogleAuth-Info.plist */,
 				872B02C61672A73B003613A1 /* ZumoE2ETestApp-Info.plist */,
 				872B02C71672A73B003613A1 /* InfoPlist.strings */,
 				872B02CA1672A73B003613A1 /* main.m */,
@@ -323,6 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				872B02C91672A73B003613A1 /* InfoPlist.strings in Resources */,
+				8099D2E41EFBC75C005F24D4 /* GoogleAuth-Info.plist in Resources */,
 				872B02EE1673EE91003613A1 /* ZumoTestHelpViewController.xib in Resources */,
 				A2B509E4199C006600A914CF /* Main_iPhone.Storyboard in Resources */,
 				A3AD0B6D1BED91F900288E3D /* Launch Screen.storyboard in Resources */,
@@ -346,6 +387,7 @@
 				A2B509E0199B376C00A914CF /* ZumoTestResultViewController.m in Sources */,
 				872B02FE1673F4CF003613A1 /* ZumoMainTableViewController.m in Sources */,
 				9C9E224F1E2E980700EC3A91 /* ZumoLoginSafariViewControllerSwiftTests.swift in Sources */,
+				8099D2E71EFBD4AB005F24D4 /* ZumoTestGoogleSignInDelegate.m in Sources */,
 				872B03031673F9D4003613A1 /* ZumoTestGlobals.m in Sources */,
 				872B030D16758058003613A1 /* ZumoTestGroupTableViewController.m in Sources */,
 				8757386A18A40C2A0025024F /* ZumoTestRunSetup.m in Sources */,
@@ -473,6 +515,7 @@
 				INFOPLIST_FILE = "ZumoE2ETestApp/ZumoE2ETestApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.microsoft.azure.test.ZumoE2ETestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -501,6 +544,7 @@
 				INFOPLIST_FILE = "ZumoE2ETestApp/ZumoE2ETestApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.microsoft.azure.test.ZumoE2ETestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

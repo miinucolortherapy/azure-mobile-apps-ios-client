@@ -10,6 +10,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "ZumoTestResultViewController.h"
 #import "ZumoTestCallbacks.h"
+#import "GoogleSignIn/GoogleSignIn.h"
 
 @interface ZumoTestGroupTableViewController () <MFMailComposeViewControllerDelegate>
 
@@ -33,7 +34,9 @@
     if (globals.storageURL && ![globals.storageURL isEqualToString:@""]) {
         self.blobConnection = [[ZumoBlobConnection alloc] initWithStorageURL:globals.storageURL token:globals.storageToken];
     }
-    
+
+    [GIDSignIn sharedInstance].uiDelegate = self;
+
     self.navigationItem.title = groupName;
     
     [self resetTests:self];

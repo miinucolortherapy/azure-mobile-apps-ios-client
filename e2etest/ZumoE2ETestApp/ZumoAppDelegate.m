@@ -16,7 +16,10 @@ NSString *const ZUMO_E2E_TEST_APP_NAME = @"zumoe2etestapp";
     UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
     [application registerUserNotificationSettings:notificationSettings];
     [application registerForRemoteNotifications];
-    
+    self.googleDelegate = [ZumoTestGoogleSignInDelegate alloc];
+    [GIDSignIn sharedInstance].serverClientID = @"798089790547-ih5t3frldel62r59bqu3eastnlrl2347.apps.googleusercontent.com" ;
+    [GIDSignIn sharedInstance].clientID = @"798089790547-eepuj4sfu96f7rj1bhotvuhpvdsta66b.apps.googleusercontent.com";
+    [GIDSignIn sharedInstance].delegate = self.googleDelegate;
     return YES;
 }
 
@@ -43,7 +46,9 @@ NSString *const ZUMO_E2E_TEST_APP_NAME = @"zumoe2etestapp";
         return [[ZumoTestGlobals sharedInstance].client resumeWithURL:url];
     }
     else {
-        return NO;
+        return [[GIDSignIn sharedInstance] handleURL:url
+                                   sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                          annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
     }
 }
 
