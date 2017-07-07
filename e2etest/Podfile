@@ -1,0 +1,5 @@
+workspace '../ZumoE2ETest'
+target 'ZumoE2ETestApp' do
+  use_frameworks!
+  pod 'Google/SignIn'
+end

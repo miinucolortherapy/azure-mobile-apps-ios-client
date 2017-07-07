@@ -17,6 +17,8 @@ NSString *const ZUMO_E2E_TEST_APP_NAME = @"zumoe2etestapp";
     [application registerUserNotificationSettings:notificationSettings];
     [application registerForRemoteNotifications];
     self.googleDelegate = [ZumoTestGoogleSignInDelegate alloc];
+    NSError* configureError;
+    [[GGLContext sharedInstance] configureWithError: &configureError];
     [GIDSignIn sharedInstance].serverClientID = @"798089790547-ih5t3frldel62r59bqu3eastnlrl2347.apps.googleusercontent.com" ;
     [GIDSignIn sharedInstance].clientID = @"798089790547-eepuj4sfu96f7rj1bhotvuhpvdsta66b.apps.googleusercontent.com";
     [GIDSignIn sharedInstance].delegate = self.googleDelegate;
