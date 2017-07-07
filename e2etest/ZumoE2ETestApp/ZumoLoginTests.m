@@ -5,7 +5,11 @@
 #import "ZumoLoginTests.h"
 #import "ZumoTest.h"
 #import "ZumoTestGlobals.h"
-#import "ZumoTestGoogleSignInDelegate.h"
+#import "ZumoAppDelegate.h"
+#import <ADAL/ADAuthenticationContext.h>
+#import <ADAL/ADAuthenticationSettings.h>
+#import <ADAL/ADAuthenticationResult.h>
+#import <ADAL/ADTokenCacheItem.h>
 
 @interface TimerTarget : NSObject
 {
@@ -59,7 +63,7 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
     
     result = [self createServerLoginRefreshTokenFlowForProvider:@"microsoftaccount" tests:result];
 
-    result = [self createServerLoginRefreshTokenFlowForProvider:@"aad" tests:result];
+    result = [self createAADLoginTests:result];
 
     result = [self createGoogleLoginTests:result];
 
@@ -180,6 +184,58 @@ typedef enum { ZumoTableAnonymous, ZumoTableAuthenticated } ZumoTableType;
     }];
   }];
 
+  return result;
+}
+
++ (NSMutableArray *)createAADLoginTests:(NSMutableArray *)tests {
+  tests = [self createServerLoginRefreshTokenFlowForProvider:@"aad" tests:tests];
+  [tests addObject:[self createClientSideLoginWithAAD]];
+  return tests;
+}
+
+
++ (ZumoTest *)createClientSideLoginWithAAD {
+  ZumoTest *result = [ZumoTest createTestWithName:[NSString stringWithFormat:@"Login via token for AAD"] andExecution:^(ZumoTest *test, UIViewController *viewController, ZumoTestCompletion completion) {
+    NSString *authority = @"https://login.windows.net/azuremobile.onmicrosoft.com";
+    NSString *resourceId = @"8d8b5207-e2d8-4402-a081-53149d056cfd";
+    NSString *clientId = @"486a3dbd-b102-4348-b68c-7d0d7deb4dc3";
+
+    // Take last used url.
+    NSArray *lastUsedApp = [[ZumoTestGlobals sharedInstance] loadAppInfo];
+    NSString *fullUrl = [NSString stringWithFormat:@"%@/.auth/login/done", [lastUsedApp objectAtIndex:0]];
+    NSURL *redirectUri = [NSURL URLWithString:fullUrl];
+
+    ZumoAppDelegate *appDelegate = ((ZumoAppDelegate*)(UIApplication.sharedApplication.delegate));
+    UIViewController *parentViewController = ((UINavigationController *)(appDelegate.window.rootViewController)).topViewController;
+    ADAuthenticationError *error;
+    ADAuthenticationContext *authContext = [ADAuthenticationContext authenticationContextWithAuthority:authority error:&error];
+    authContext.parentController = parentViewController;
+    [ADAuthenticationSettings sharedInstance].enableFullScreen = YES;
+    MSClient *client = [[ZumoTestGlobals sharedInstance] client];
+    [authContext acquireTokenWithResource:resourceId
+                                 clientId:clientId
+                              redirectUri:redirectUri
+                          completionBlock:^(ADAuthenticationResult *result) {
+                            if (result.status != AD_SUCCEEDED) {
+                              [test addLog:[NSString stringWithFormat:@"Error logging in: %@", result.error]];
+                              [test setTestStatus:TSFailed];
+                              completion(NO);
+                            } else {
+                              NSDictionary *payload = @{ @"access_token" : result.tokenCacheItem.accessToken };
+                              [client loginWithProvider:@"aad" token:payload completion:^(MSUser *user, NSError *error) {
+                                if (error) {
+                                  [test addLog:[NSString stringWithFormat:@"Error logging in: %@", error]];
+                                  [test setTestStatus:TSFailed];
+                                  completion(NO);
+                                } else {
+                                  [test addLog:[NSString stringWithFormat:@"Logged in as %@", [user userId]]];
+                                  [test setTestStatus:TSPassed];
+                                  completion(YES);
+                                }
+                              }];
+                            }
+                          }];
+  }];
   return result;
 }
 
