@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------------------
 
 #import "ZumoTest.h"
-#import "GoogleSignIn/GoogleSignIn.h"
+#import <Google/SignIn.h>
 
 typedef void (^AzureLoginBlock)(GIDGoogleUser*);
 

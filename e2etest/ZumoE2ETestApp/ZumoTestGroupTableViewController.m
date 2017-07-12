@@ -10,7 +10,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "ZumoTestResultViewController.h"
 #import "ZumoTestCallbacks.h"
-#import "GoogleSignIn/GoogleSignIn.h"
+#import <Google/SignIn.h>
 
 @interface ZumoTestGroupTableViewController () <MFMailComposeViewControllerDelegate>
 
