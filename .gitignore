@@ -18,3 +18,4 @@ instruments*
 ZumoAutomationWithData.js
 ZumoAutomationTemplate-*.js
 e2etest/Pods
+e2etest/Podfile.lock
