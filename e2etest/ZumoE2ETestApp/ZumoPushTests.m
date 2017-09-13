@@ -187,6 +187,9 @@ static NSString *topicSports = @"topic:Sports";
               completion:(ZumoTestCompletion)completion
               isNegative:(BOOL)isNegative {
   [test addLog:[NSString stringWithFormat:@"Sending push request to API 'push'"]];
+  if (type == nil) {
+    type = @"apns";
+  }
   NSMutableDictionary *item = @{@"method" : @"send", @"type" : type, @"payload" : payload, @"token": deviceToken, @"delay": @(seconds)}.mutableCopy;
 
   if (tag) {
