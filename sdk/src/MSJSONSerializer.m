@@ -478,7 +478,7 @@ static NSArray<NSString *> *allIdKeys;
         }
         
         for (NSString *key in [preSerializedItem allKeys]) {
-            id value = [preSerializedItem valueForKey:key];
+            id value = [preSerializedItem objectForKey:key];
             id preSerializedValue = [self preSerializeItem:value RemoveSystemProperties:NO];
             [preSerializedItem setObject:preSerializedValue forKey:key];
         }
@@ -510,7 +510,7 @@ static NSArray<NSString *> *allIdKeys;
     if ([item isKindOfClass:[NSDictionary class]]) {
         postDeserializedItem = [item mutableCopy];
         for (NSString *key in [postDeserializedItem allKeys]) {
-            id value = [postDeserializedItem valueForKey:key];
+            id value = [postDeserializedItem objectForKey:key];
             id preSerializedValue = [self postDeserializeItem:value];
             [postDeserializedItem setObject:preSerializedValue forKey:key];
         }
