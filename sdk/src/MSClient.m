@@ -48,21 +48,21 @@
 @synthesize installId = _installId;
 -(NSString *) installId
 {
-    if(!_installId) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        _installId = [defaults stringForKey:@"WindowsAzureMobileServicesInstallationId"];
+    @synchronized(self) {
         if(!_installId) {
-            CFUUIDRef newUUID = CFUUIDCreate(kCFAllocatorDefault);
-            _installId = (__bridge_transfer NSString *)CFUUIDCreateString(kCFAllocatorDefault, newUUID);
-            CFRelease(newUUID);
-        
-            //store the install ID so we don't generate a new one next time
-            [defaults setObject:_installId forKey:@"WindowsAzureMobileServicesInstallationId"];
-            [defaults synchronize];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            _installId = [defaults stringForKey:@"WindowsAzureMobileServicesInstallationId"];
+            if(!_installId) {
+                _installId = [[NSUUID UUID] UUIDString];
+            
+                // Store the install ID so we don't generate a new one next time
+                [defaults setObject:_installId forKey:@"WindowsAzureMobileServicesInstallationId"];
+                [defaults synchronize];
+            }
         }
+        
+        return _installId;
     }
-    
-    return _installId;
 }
 
 #pragma mark * Public Static Constructor Methods
