@@ -857,6 +857,22 @@
     XCTAssertEqualObjects(error.localizedDescription, @"<Hey>This sure is some poor xml</Hey>");
 }
 
+-(void)testPropertiesWithAtSymbol
+{
+    NSError *error;
+    
+    NSDictionary *item = @{@"id": @7, @"@Prop1":@6};
+    NSData *data = [serializer dataFromItem:item idAllowed:YES ensureDictionary:NO removeSystemProperties:YES orError:&error];
+    
+    XCTAssertNil(error, @"An error occurred: %@", error.localizedDescription);
+    
+    NSString *expected = @"{\"id\":7,\"@Prop1\":6}";
+    NSString *actual = [[NSString alloc] initWithData:data
+                                             encoding:NSUTF8StringEncoding];
+    
+    XCTAssertEqualObjects(actual, expected);
+}
+
 -(void)testSystemPropertiesNotRemovedWithIntId
 {
     NSError *error;
