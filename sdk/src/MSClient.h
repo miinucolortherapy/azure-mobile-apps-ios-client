@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @name Registering and unregistering for push notifications
 
 /// The property to use for registering and unregistering for notifications via *MSPush*.
-@property (nonatomic, strong, readonly, nullable) MSPush *push;
+@property (nonatomic, strong, readonly, nonnull) MSPush *push;
 
 /// @}
 
