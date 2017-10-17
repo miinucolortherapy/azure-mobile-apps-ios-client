@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The client instance associated with the delegate
  */
-@property (nonatomic, strong) MSClient *client;
+@property (nonatomic, weak, nullable) MSClient *client;
 
 @property (nonatomic, strong, nullable) NSOperationQueue *completionQueue;
 

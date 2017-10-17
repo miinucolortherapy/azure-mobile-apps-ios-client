@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MSLoginSafariViewController : UIViewController
 
-@property (nonatomic)MSClient* client;
+@property (nonatomic, weak, nullable) MSClient* client;
 
 /// Initializes an |MSLoginSafariViewController| instance with the given client
 - (instancetype)initWithClient:(MSClient *)client;

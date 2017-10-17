@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Connection delegate to manage data tasks with the urlSession
  */
-@property (nonatomic, strong) MSConnectionDelegate *connectionDelegate;
+@property (nonatomic, strong, nonnull) MSConnectionDelegate *connectionDelegate;
 
 /**
  Session instance to be used for all data tasks for this client instance

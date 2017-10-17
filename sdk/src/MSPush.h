@@ -14,7 +14,7 @@
 
 #pragma  mark * Public Initializer Methods
 
-@property (nonatomic, strong, readonly, nonnull) MSClient *client;
+@property (nonatomic, weak, readonly, nullable) MSClient *client;
 
 ///@name Initializing the MSPush Object
 ///@{
