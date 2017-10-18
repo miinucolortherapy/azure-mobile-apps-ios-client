@@ -48,7 +48,7 @@ The SDK requires XCode 7.0 or greater.
 
 1. Add the following to your podfile to include MicrosoftAzureMobile:
 
-    `pod 'MicrosoftAzureMobile', '~> 3.3.0'`
+    `pod 'MicrosoftAzureMobile', '~> 3.4.0'`
 
 2. You can install the dependencies in your project: 
 
