@@ -15,7 +15,7 @@ Apps cloud backend to [iOS apps](https://azure.microsoft.com/en-us/documentation
 
 The current release of the iOS SDK for Azure Mobile Apps supports:
 
-* iOS versions 8.0 through 10.2
+* iOS versions 8.0 through 11.0
 * Objective-C Projects
 * Swift 3.0 Projects (with XCode 8.1)
 

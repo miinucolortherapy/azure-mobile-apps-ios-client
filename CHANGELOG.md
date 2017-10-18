@@ -1,5 +1,13 @@
 # Azure Mobile Apps iOS SDK Change Log
 
+### Version 3.4.0
+- Added support for iOS 11
+- Added register with installation method [#104](https://github.com/Azure/azure-mobile-apps-ios-client/issues/104)
+- Fixed ARC issue on error handling  [#133](https://github.com/Azure/azure-mobile-apps-ios-client/issues/133)
+- Fixed issue with @ symbol in property names [#160](https://github.com/Azure/azure-mobile-apps-ios-client/issues/160)
+- Fixed memory leak issue [#136](https://github.com/Azure/azure-mobile-apps-ios-client/issues/136)
+- Fixed issue [#132](https://github.com/Azure/azure-mobile-apps-ios-client/issues/132)
+
 ### Version 3.3.0
 - Support server login flow using SafariViewController. Google recently [announced](https://developers.googleblog.com/2016/08/modernizing-oauth-interactions-in-native-apps.html) the deprecation of webview OAuth login. Going forward, all server login flow should use loginWithProvider:urlScheme:controller:animated:completion that uses SafariViewController instead of loginWithProvider:controller:animated:completion that uses webview.
 - Added support for Swift 3.0
@@ -39,7 +47,7 @@
 
 ### Version 2.2.2
 - Updated build tooling to use XCode 7 and include BitCode [issue #794](https://github.com/Azure/azure-mobile-services/issues/794)
- - Note: Framework now requires using XCode 7
+- Note: Framework now requires using XCode 7
 - Fixed issue with MSCoreDataStore.h that prevented it from bring used as part of a cocoapod
 
 ### Version 2.2.1
@@ -51,7 +59,7 @@
 - Added support for returning the underlying NSOperation when performing push, pull and purge operations [7c37f60](https://github.com/Azure/azure-mobile-services/commit/7c37f60)
 - Added support for configuring the page size of a pull operation [0c31aa3](https://github.com/Azure/azure-mobile-services/commit/0c31aa3)
 - Added support for NSUUID in PredicateTranslator [24c5a61](https://github.com/Azure/azure-mobile-services/commit/24c5a61)
-- Fixed [issue #699] (https://github.com/Azure/azure-mobile-services/issues/699) that prevented properties with value nil from being sent to server [bf41081](https://github.com/Azure/azure-mobile-services/commit/bf41081)
+- Fixed [issue #699](https://github.com/Azure/azure-mobile-services/issues/699) that prevented properties with value nil from being sent to server [bf41081](https://github.com/Azure/azure-mobile-services/commit/bf41081)
 - Fixed handling of network errors during push operations [1a9fdf4](https://github.com/Azure/azure-mobile-services/commit/1a9fdf4)
 - Fixed potential race conditions while performing table operations [15581be](https://github.com/Azure/azure-mobile-services/commit/15581be)
 - Fixed incorrect ID validation during insert operations [f5e44d4](https://github.com/Azure/azure-mobile-services/commit/f5e44d4)
@@ -100,7 +108,7 @@
 - Support for optimistic concurrency on delete
 
 ### iOS SDK
-- - Fix issue [#218](https://github.com/WindowsAzure/azure-mobile-services/issues/218) in which some dates coming from the mobile services with the .NET runtime weren't parsed correctly
+- Fix issue [#218](https://github.com/WindowsAzure/azure-mobile-services/issues/218) in which some dates coming from the mobile services with the .NET runtime weren't parsed correctly
 
 ### Version 1.1.3
 - Added a mapping in the authentication provider from WindowsAzureActiveDirectory to the value used in the REST API (`/login/aad`)
