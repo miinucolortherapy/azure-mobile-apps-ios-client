@@ -31,7 +31,7 @@
 #import "MSInstallationTemplate.h"
 
 #define MicrosoftAzureMobileSdkMajorVersion 3
-#define MicrosoftAzureMobileSdkMinorVersion 3
+#define MicrosoftAzureMobileSdkMinorVersion 4
 #define MicrosoftAzureMobileSdkBuildVersion 0
 
 #endif
