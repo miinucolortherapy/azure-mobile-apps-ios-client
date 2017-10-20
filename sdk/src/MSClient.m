@@ -15,7 +15,9 @@
 #import "MSSyncTable.h"
 #import "MSPush.h"
 #import "MSConnectionDelegate.h"
+#if TARGET_OS_IPHONE
 #import "MSLoginSafariViewController.h"
+#endif
 
 #pragma mark * MSClient Private Interface
 
@@ -48,21 +50,21 @@
 @synthesize installId = _installId;
 -(NSString *) installId
 {
-    @synchronized(self) {
+    if(!_installId) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        _installId = [defaults stringForKey:@"WindowsAzureMobileServicesInstallationId"];
         if(!_installId) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            _installId = [defaults stringForKey:@"WindowsAzureMobileServicesInstallationId"];
-            if(!_installId) {
-                _installId = [[NSUUID UUID] UUIDString];
-            
-                // Store the install ID so we don't generate a new one next time
-                [defaults setObject:_installId forKey:@"WindowsAzureMobileServicesInstallationId"];
-                [defaults synchronize];
-            }
-        }
+            CFUUIDRef newUUID = CFUUIDCreate(kCFAllocatorDefault);
+            _installId = (__bridge_transfer NSString *)CFUUIDCreateString(kCFAllocatorDefault, newUUID);
+            CFRelease(newUUID);
         
-        return _installId;
+            //store the install ID so we don't generate a new one next time
+            [defaults setObject:_installId forKey:@"WindowsAzureMobileServicesInstallationId"];
+            [defaults synchronize];
+        }
     }
+    
+    return _installId;
 }
 
 #pragma mark * Public Static Constructor Methods
@@ -100,9 +102,11 @@
         _login = [[MSLogin alloc] initWithClient:self];
         _push = [[MSPush alloc] initWithClient:self];
         _connectionDelegate = [[MSConnectionDelegate alloc] initWithClient:self];
-        
+
+#if TARGET_OS_IPHONE
         _loginSafariViewController = [[MSLoginSafariViewController alloc] initWithClient:self];
-        
+#endif
+		
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         _urlSession = [NSURLSession sessionWithConfiguration:configuration
                                                     delegate:self.connectionDelegate
@@ -327,7 +331,7 @@
         MSAPIConnection *connection =
             [MSAPIConnection connectionWithApiRequest:request
                                                client:self
-                                           completion:completion];
+                                               completion:completion];
         [connection start];
     }
 }

@@ -15,7 +15,9 @@
 @class MSPush;
 @class MSSyncContext;
 @class MSLoginController;
+#if TARGET_OS_IPHONE
 @class MSLoginSafariViewController;
+#endif
 
 @protocol MSFilter;
 
@@ -60,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @name Registering and unregistering for push notifications
 
 /// The property to use for registering and unregistering for notifications via *MSPush*.
-@property (nonatomic, strong, readonly, nonnull) MSPush *push;
+@property (nonatomic, strong, readonly, nullable) MSPush *push;
 
 /// @}
 
@@ -72,8 +74,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// recommended for non-testing use.
 @property (nonatomic, strong, nullable) MSUser *currentUser;
 
+#if TARGET_OS_IPHONE
 /// An instance of |MSLoginSafariViewController|
 @property (nonatomic, strong, nonnull) MSLoginSafariViewController *loginSafariViewController;
+#endif
 
 /// @}
 
