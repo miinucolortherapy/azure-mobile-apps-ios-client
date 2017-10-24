@@ -26,6 +26,8 @@ Pod::Spec.new do |s|
     "sdk/src/MSPullSettings.h",
     "sdk/src/MSConnectionConfiguration.h",
     "sdk/src/MSPush.h",
+    "sdk/src/MSInstallation.h",
+    "sdk/src/MSInstallationTemplate.h",
     "sdk/src/MSQuery.h",
     "sdk/src/MSQueryResult.h",
     "sdk/src/MSSyncContext.h",
