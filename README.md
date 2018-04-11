@@ -89,6 +89,10 @@ The SDK requires XCode 7.0 or greater.
 3. Drag a copy of the ```WindowsAzureMobileServices.framework``` into the project
 4. Pick the device to test and run the project
 
+## Future of Azure Mobile Apps
+ 
+Microsoft is committed to fully supporting Azure Mobile Apps, including **support for the latest OS release, bug fixes, documentation improvements, and community PR reviews**. Please note that the product team is **not currently investing in any new feature work** for Azure Mobile Apps. We highly appreciate community contributions to all areas of Azure Mobile Apps. 
+
 ## Useful Resources
 
 * [Quickstarts](https://github.com/Azure/azure-mobile-apps-quickstarts)
