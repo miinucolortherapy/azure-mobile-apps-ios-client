@@ -326,7 +326,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -558,6 +558,7 @@
 			baseConfigurationReference = A2838AF5B6268ABD1512B88E /* Pods-ZumoE2ETestApp.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ZumoE2ETestApp/ZumoE2ETestApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5Z97G9NZQ6;
@@ -588,6 +589,7 @@
 			baseConfigurationReference = C1619A0BBE473A7845043D87 /* Pods-ZumoE2ETestApp.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ZumoE2ETestApp/ZumoE2ETestApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5Z97G9NZQ6;
