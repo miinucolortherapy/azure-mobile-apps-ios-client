@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ----------------------------------------------------------------------------
 
+#import <stdatomic.h>
 #import "MSQueuePushOperation.h"
 #import "MSTableOperationError.h"
 #import "MSSyncContextInternal.h"
@@ -12,7 +13,10 @@
 #import "MSSyncTable.h"
 #import "MSSyncContextReadResult.h"
 
-@interface MSQueuePushOperation()
+@interface MSQueuePushOperation() {
+  atomic_bool executing_;
+  atomic_bool finished_;
+}
 
 @property (nonatomic, strong) NSError *error;
 @property (nonatomic, weak) dispatch_queue_t dispatchQueue;
@@ -32,11 +36,12 @@
 {
     self = [super init];
     if (self) {
+        executing_ = ATOMIC_VAR_INIT(NO);
+        finished_ = ATOMIC_VAR_INIT(NO);
         _syncContext = syncContext;
         _dispatchQueue = dispatchQueue;
         _callbackQueue = callbackQueue;
         _completion = [completion copy];
-        
     }
     return self;
 }
@@ -44,9 +49,9 @@
 - (void) completeOperation {
     [self willChangeValueForKey:@"isFinished"];
     [self willChangeValueForKey:@"isExecuting"];
-    
-    executing_ = NO;
-    finished_ = YES;
+  
+    atomic_store(&executing_, NO);
+    atomic_store(&finished_, YES);
     
     [self didChangeValueForKey:@"isExecuting"];
     [self didChangeValueForKey:@"isFinished"];
@@ -65,7 +70,7 @@
 
 -(void) start
 {
-    if (finished_) {
+    if (self.finished) {
         return;
     }
     else if (self.isCancelled) {
@@ -74,7 +79,7 @@
     }
     
     [self willChangeValueForKey:@"isExecuting"];
-    executing_ = YES;
+    atomic_store(&executing_, YES);
     [self didChangeValueForKey:@"isExecuting"];
     
     // For now, we process one operation at a time
@@ -374,11 +379,11 @@
 }
 
 - (BOOL) isExecuting {
-    return executing_;
+    return atomic_load(&executing_);
 }
 
 - (BOOL) isFinished {
-    return finished_;
+    return atomic_load(&finished_);
 }
 
 @end

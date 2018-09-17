@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ----------------------------------------------------------------------------
 
+#import <stdatomic.h>
 #import "MSQueuePullOperation.h"
 #import "MSTableOperationError.h"
 #import "MSSyncContextInternal.h"
@@ -21,7 +22,10 @@
 #import "MSOperationQueue.h"
 #import "MSSyncContextReadResult.h"
 
-@interface MSQueuePullOperation()
+@interface MSQueuePullOperation() {
+  atomic_bool executing_;
+  atomic_bool finished_;
+}
 
 @property (nonatomic, weak)     dispatch_queue_t dispatchQueue;
 @property (nonatomic, weak)     NSOperationQueue *callbackQueue;
@@ -63,6 +67,8 @@
 {
     self = [super init];
     if (self) {
+        executing_ = ATOMIC_VAR_INIT(NO);
+        finished_ = ATOMIC_VAR_INIT(NO);
         _syncContext = syncContext;
         _query = query;
         _queryId = queryId;
@@ -87,9 +93,9 @@
 - (void) completeOperation {
     [self willChangeValueForKey:@"isFinished"];
     [self willChangeValueForKey:@"isExecuting"];
-    
-    executing_ = NO;
-    finished_ = YES;
+  
+    atomic_store(&executing_, NO);
+    atomic_store(&finished_, YES);
     
     [self didChangeValueForKey:@"isExecuting"];
     [self didChangeValueForKey:@"isFinished"];
@@ -113,7 +119,7 @@
 
 -(void) start
 {
-    if (finished_) {
+    if (self.finished) {
         return;
     }
     else if (self.isCancelled) {
@@ -122,7 +128,7 @@
     }
     
     [self willChangeValueForKey:@"isExecuting"];
-    executing_ = YES;
+    atomic_store(&executing_, YES);
     [self didChangeValueForKey:@"isExecuting"];
     
     if (self.queryId) {
@@ -346,11 +352,11 @@
 }
 
 - (BOOL) isExecuting {
-    return executing_;
+    return atomic_load(&executing_);
 }
 
 - (BOOL) isFinished {
-    return finished_;
+    return atomic_load(&finished_);
 }
 
 @end

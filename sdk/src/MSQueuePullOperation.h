@@ -8,10 +8,7 @@
 @class MSSyncContext;
 @class MSQuery;
 
-@interface MSQueuePullOperation : NSOperation {
-    BOOL executing_;
-    BOOL finished_;
-}
+@interface MSQueuePullOperation : NSOperation
 
 - (id) initWithSyncContext:(MSSyncContext *)syncContext
                      query:(MSQuery *)query

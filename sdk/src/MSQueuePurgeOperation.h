@@ -8,10 +8,7 @@
 @class MSSyncContext;
 @class MSQuery;
 
-@interface MSQueuePurgeOperation : NSOperation {
-    BOOL executing_;
-    BOOL finished_;
-}
+@interface MSQueuePurgeOperation : NSOperation
 
 - (id) initPurgeWithSyncContext:(MSSyncContext *)syncContext
                           query:(MSQuery *)query
