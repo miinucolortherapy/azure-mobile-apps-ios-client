@@ -164,7 +164,6 @@
 		A281900418BB2FF5001B14E7 /* MSTableOperationError.h in Headers */ = {isa = PBXBuildFile; fileRef = A281900218BB2FF5001B14E7 /* MSTableOperationError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A281900518BB2FF5001B14E7 /* MSTableOperationError.m in Sources */ = {isa = PBXBuildFile; fileRef = A281900318BB2FF5001B14E7 /* MSTableOperationError.m */; };
 		A28224B0192ACEAE00EF8743 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A28224AF192ACEAE00EF8743 /* CoreData.framework */; };
-		A28224B3192ACFB700EF8743 /* CoreDataTestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A28224B1192ACFB700EF8743 /* CoreDataTestModel.xcdatamodeld */; };
 		A28224B4192AD00E00EF8743 /* CoreDataTestModel.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = A28224B1192ACFB700EF8743 /* CoreDataTestModel.xcdatamodeld */; };
 		A295B2B3192AB2040067562E /* MSCoreDataStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A295B2B2192AB2040067562E /* MSCoreDataStoreTests.m */; };
 		A29F44A31953CBF30063C0C1 /* MSCoreDataStore+TestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A29F44A21953CBF30063C0C1 /* MSCoreDataStore+TestHelper.m */; };
@@ -1555,7 +1554,6 @@
 				A3514E3D1BCC62380032B74C /* MSClientConnectionTests.m in Sources */,
 				E8EA24C0161CFCF400BE055D /* MSURLbuilderTests.m in Sources */,
 				A24701C6196897A700385DA2 /* MSPushTests.m in Sources */,
-				A28224B3192ACFB700EF8743 /* CoreDataTestModel.xcdatamodeld in Sources */,
 				9CA4B53F1DC97F1500F1F8D4 /* MSLoginSafariViewControllerTests.m in Sources */,
 				E8E37904161E2FC500C13F00 /* MSTestFilter.m in Sources */,
 				D0EFD8571B2F73B0009CF6DA /* MSPullSettingsTests.m in Sources */,
