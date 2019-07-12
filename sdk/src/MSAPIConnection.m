@@ -54,6 +54,7 @@
             }
             
             completion(data, response, error);
+            connection = nil;
         };
     }
     
